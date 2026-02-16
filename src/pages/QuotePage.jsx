@@ -1,12 +1,18 @@
 export default function QuotePage() {
   return (
-    <div style={{ marginTop: '-1px' }}>
+    <div
+      style={{
+        minHeight: '100dvh',
+        background: 'linear-gradient(135deg, #0a1d4f 0%, #0b3b72 58%, #0f85c6 100%)',
+      }}
+    >
       <iframe
         src="/quote.html"
         title="Instant Quote Calculator"
         style={{
           width: '100%',
-          height: 'calc(100vh - 128px)',
+          minHeight: '100dvh',
+          height: '100dvh',
           border: 'none',
           display: 'block',
         }}
