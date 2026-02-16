@@ -1,4 +1,4 @@
-import { ArrowRight, MapPin, Phone } from 'lucide-react'
+import { ArrowRight, Facebook, Instagram, MapPin, Phone } from 'lucide-react'
 import { business } from '../data/siteData'
 import { trackCallClick, trackEvent } from '../utils/analytics'
 
@@ -68,8 +68,18 @@ export default function Footer() {
               <MapPin size={14} />
               {business.address}
             </li>
-            <li><a href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
-            <li><a href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+            <li>
+              <a className="footer-social-link footer-social-facebook" href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer">
+                <Facebook size={14} />
+                Facebook
+              </a>
+            </li>
+            <li>
+              <a className="footer-social-link footer-social-instagram" href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer">
+                <Instagram size={14} />
+                Instagram
+              </a>
+            </li>
           </ul>
         </div>
       </div>

@@ -845,23 +845,72 @@ p {
 
 .area-social-rail {
   position: absolute;
-  left: -56px;
+  left: -74px;
   top: 45%;
   transform: translateY(-50%);
   display: grid;
-  gap: 0.5rem;
+  gap: 0.58rem;
 }
 
-.area-social-rail a {
-  width: 36px;
-  height: 36px;
+.area-social-link {
+  min-width: 118px;
+  height: 40px;
   border-radius: 999px;
   border: 1px solid #b7d7ea;
   background: #fff;
   color: #1f325f;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 6px 12px rgba(7, 30, 67, 0.12);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0 0.7rem;
+  box-shadow: 0 8px 16px rgba(7, 30, 67, 0.14);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.area-social-link:hover {
+  transform: translateX(2px) translateY(-1px);
+  box-shadow: 0 12px 24px rgba(7, 30, 67, 0.18);
+}
+
+.area-social-facebook:hover {
+  border-color: rgba(24, 119, 242, 0.55);
+}
+
+.area-social-instagram:hover {
+  border-color: rgba(225, 48, 108, 0.55);
+}
+
+.area-social-maps:hover {
+  border-color: rgba(16, 185, 129, 0.5);
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: 999px;
+  border: 1px solid rgba(154, 176, 214, 0.35);
+  padding: 0.3rem 0.62rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+}
+
+.footer-social-link:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.footer-social-facebook:hover {
+  border-color: rgba(64, 132, 243, 0.65);
+}
+
+.footer-social-instagram:hover {
+  border-color: rgba(225, 48, 108, 0.65);
 }
 
 .review-card-v2 {
@@ -1411,6 +1460,11 @@ a:focus-visible {
     justify-content: start;
   }
 
+  .area-social-link {
+    min-width: 0;
+    padding: 0 0.78rem;
+  }
+
   .footer-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1565,6 +1619,12 @@ a:focus-visible {
     min-height: 420px;
   }
 
+  .area-social-link {
+    height: 38px;
+    font-size: 0.7rem;
+    padding: 0 0.62rem;
+  }
+
   .hero-google-badge {
     grid-template-columns: 1fr;
     max-width: 100%;
@@ -1661,6 +1721,17 @@ a:focus-visible {
 
   .hero-trust-row {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .area-social-link span {
+    display: none;
+  }
+
+  .area-social-link {
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+    padding: 0;
   }
 
   .footer-brand p {

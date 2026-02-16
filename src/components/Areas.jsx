@@ -55,14 +55,17 @@ export default function Areas() {
         </div>
 
         <div className="area-social-rail" aria-label="Social links">
-          <a href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <a className="area-social-link area-social-facebook" href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <Facebook size={16} />
+            <span>Facebook</span>
           </a>
-          <a href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <a className="area-social-link area-social-instagram" href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
             <Instagram size={16} />
+            <span>Instagram</span>
           </a>
-          <a href={business.mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
+          <a className="area-social-link area-social-maps" href={business.mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
             <MapPin size={16} />
+            <span>Map</span>
           </a>
         </div>
       </div>
