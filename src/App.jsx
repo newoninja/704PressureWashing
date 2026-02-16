@@ -56,6 +56,7 @@ function resolvePage(pathname) {
 
 export default function App() {
   const pathname = window.location.pathname.replace(/\/$/, '') || '/'
+  const isQuotePage = pathname === '/quote'
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -67,9 +68,9 @@ export default function App() {
   return (
     <div className="app-shell">
       <AnalyticsLoader />
-      <Nav />
+      {!isQuotePage && <Nav />}
       <main className="site-main">{resolvePage(pathname)}</main>
-      <Footer />
+      {!isQuotePage && <Footer />}
     </div>
   )
 }
