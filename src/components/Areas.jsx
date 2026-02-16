@@ -46,7 +46,7 @@ export default function Areas() {
           <div className="map-ring map-ring-outer" aria-hidden="true" />
           <div className="map-ring map-ring-inner" aria-hidden="true" />
           <div className="map-center-pin" aria-hidden="true">
-            <MapPin size={28} />
+            <MapPin size={24} />
           </div>
           <div className="map-label">Charlotte Core Radius</div>
           <a className="map-watermark" href={business.mapsUrl} target="_blank" rel="noopener noreferrer">

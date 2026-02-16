@@ -23,6 +23,7 @@ export default function Testimonials() {
   const [index, setIndex] = useState(0)
   const [cardsPerView, setCardsPerView] = useState(3)
   const sectionRef = useReveal()
+  const sliderRef = useRef(null)
 
   useEffect(() => {
     let active = true
@@ -77,7 +78,6 @@ export default function Testimonials() {
     setIndex((prev) => Math.max(0, prev - 1))
   }
 
-  // Auto-play
   useEffect(() => {
     if (maxIndex <= 0) return
     const id = setInterval(() => {
@@ -85,6 +85,19 @@ export default function Testimonials() {
     }, AUTO_PLAY_MS)
     return () => clearInterval(id)
   }, [maxIndex, goNext])
+
+  const touchStartX = useRef(0)
+
+  function onTouchStart(event) {
+    touchStartX.current = event.touches[0].clientX
+  }
+
+  function onTouchEnd(event) {
+    const diff = event.changedTouches[0].clientX - touchStartX.current
+    if (Math.abs(diff) < 40) return
+    if (diff < 0) goNext()
+    else goPrev()
+  }
 
   const gapPx = 16
   const slidePercent = 100 / cardsPerView
@@ -102,10 +115,14 @@ export default function Testimonials() {
         </div>
 
         <div
+          ref={sliderRef}
           className="review-slider-wrap reveal reveal-up"
           style={{ animationDelay: '0.15s' }}
           onMouseEnter={() => { paused.current = true }}
           onMouseLeave={() => { paused.current = false }}
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          aria-label="Customer reviews carousel"
         >
           <div
             className="review-slider-track"
@@ -135,11 +152,11 @@ export default function Testimonials() {
         </div>
 
         <div className="reviews-nav">
-          <button type="button" className="reviews-arrow" onClick={goPrev} disabled={index === 0}>
+          <button type="button" className="reviews-arrow" onClick={goPrev} disabled={index === 0} aria-label="Previous reviews">
             <ChevronLeft size={18} />
           </button>
           <span className="reviews-indicator">{index + 1} / {maxIndex + 1}</span>
-          <button type="button" className="reviews-arrow" onClick={goNext} disabled={index >= maxIndex}>
+          <button type="button" className="reviews-arrow" onClick={goNext} disabled={index >= maxIndex} aria-label="Next reviews">
             <ChevronRight size={18} />
           </button>
         </div>

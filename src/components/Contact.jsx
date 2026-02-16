@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import { CheckCircle2, Clock, MapPin, Phone, Send, Star } from 'lucide-react'
+import { CheckCircle2, Clock, MapPin, Phone, Send, ShieldCheck, Star } from 'lucide-react'
 import useReveal from '../useReveal'
 import { business, services } from '../data/siteData'
 import { trackCallClick, trackFormSubmit } from '../utils/analytics'
+import useGooglePlaceStats from '../hooks/useGooglePlaceStats'
 
 export default function Contact() {
   const [status, setStatus] = useState('idle')
   const sectionRef = useReveal()
+  const { ratingText, reviewCountText } = useGooglePlaceStats()
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -43,6 +45,11 @@ export default function Contact() {
             Request a free estimate, choose your preferred contact method, and we will respond quickly.
           </p>
 
+          <div className="contact-rating-badge" aria-label="Google rating">
+            <span>★★★★★</span>
+            <strong>Rated {ratingText}/5.0 by {reviewCountText} customers</strong>
+          </div>
+
           <div className="contact-info-card">
             <a href={`tel:${business.phoneHref}`} onClick={() => trackCallClick('contact_panel')}>
               <Phone size={16} />
@@ -68,7 +75,7 @@ export default function Contact() {
             <div className="form-success" role="status">
               <CheckCircle2 size={30} />
               <h3>Thanks for reaching out.</h3>
-              <p>We received your request and will contact you soon.</p>
+              <p>We received your request and will contact you within a few business hours.</p>
             </div>
           ) : (
             <form
@@ -82,6 +89,7 @@ export default function Contact() {
               <input type="hidden" name="form-name" value="contact" />
               <input type="hidden" name="bot-field" />
 
+              <h3 className="form-section-title">Contact Details</h3>
               <div className="form-row">
                 <label>
                   First Name
@@ -89,7 +97,7 @@ export default function Contact() {
                 </label>
                 <label>
                   Last Name
-                  <input type="text" name="lastName" required />
+                  <input type="text" name="lastName" />
                 </label>
               </div>
 
@@ -104,10 +112,11 @@ export default function Contact() {
                 </label>
               </div>
 
+              <h3 className="form-section-title">Project Details</h3>
               <div className="form-row">
                 <label>
                   Service Address
-                  <input type="text" name="serviceAddress" placeholder="Street, City, State" required />
+                  <input type="text" name="serviceAddress" placeholder="Street, City, State" />
                 </label>
                 <label>
                   ZIP Code
@@ -146,9 +155,15 @@ export default function Contact() {
                 <span>I agree to receive SMS updates about my estimate and appointment.</span>
               </label>
 
+              <div className="form-reassurance" role="note">
+                <span><ShieldCheck size={14} /> 100% Free Estimate</span>
+                <span><Clock size={14} /> Fast Response</span>
+                <span><ShieldCheck size={14} /> No Spam, Ever</span>
+              </div>
+
               <button type="submit" className="btn btn-primary btn-full" disabled={status === 'submitting'}>
                 <Send size={16} />
-                {status === 'submitting' ? 'Sending...' : 'Get My Free Estimate'}
+                {status === 'submitting' ? 'Sending...' : 'Get Free Estimate'}
               </button>
 
               {status === 'error' && <p className="form-error">Something went wrong. Please call us directly.</p>}

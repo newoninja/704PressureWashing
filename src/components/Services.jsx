@@ -7,9 +7,10 @@ function ServiceCard({ service }) {
   return (
     <article className="service-card">
       <span className="service-icon">
-        <Icon size={24} />
+        <Icon size={22} />
       </span>
       <h3>{service.title}</h3>
+      <p className="service-best-for">{service.bestFor}</p>
       <p>{service.short}</p>
       <a href={`/${service.slug}`}>Learn More</a>
     </article>

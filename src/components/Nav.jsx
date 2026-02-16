@@ -3,15 +3,19 @@ import { Clock, Menu, Phone, MapPin, X } from 'lucide-react'
 import { business } from '../data/siteData'
 import { trackCallClick } from '../utils/analytics'
 
-const links = [
+const desktopLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Our Story', href: '/our-story' },
   { label: 'Services', href: '/services' },
-  { label: 'Our Work', href: '/our-work' },
+  { label: 'Company', href: '/our-story' },
   { label: 'Areas Served', href: '/areas-served' },
   { label: 'Blog', href: '/blog' },
-  { label: 'FAQs', href: '/faqs' },
   { label: 'Contact', href: '/contact' },
+]
+
+const mobileLinks = [
+  ...desktopLinks,
+  { label: 'Our Work', href: '/our-work' },
+  { label: 'FAQs', href: '/faqs' },
 ]
 
 function isLinkActive(pathname, href) {
@@ -26,7 +30,7 @@ export default function Nav() {
 
   return (
     <header className="site-header" id="top">
-      <div className="top-strip">
+      <div className="top-strip" aria-label="Contact quick info">
         <div className="container top-strip-inner">
           <div className="top-strip-item">
             <Phone size={14} />
@@ -56,7 +60,7 @@ export default function Nav() {
           </a>
 
           <nav className="desktop-nav" aria-label="Main navigation">
-            {links.map((link) => (
+            {desktopLinks.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
@@ -68,7 +72,7 @@ export default function Nav() {
           </nav>
 
           <div className="nav-actions">
-            <a href="/quote" className="btn btn-primary">Free Estimate</a>
+            <a href="/quote" className="btn btn-primary nav-estimate-btn">Get Free Estimate</a>
             <button
               type="button"
               aria-label="Toggle mobile menu"
@@ -83,8 +87,8 @@ export default function Nav() {
         {open && (
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <div className="container">
-              {links.map((link) => (
-                <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+              {mobileLinks.map((link) => (
+                <a key={`${link.label}-${link.href}`} href={link.href} onClick={() => setOpen(false)}>
                   {link.label}
                 </a>
               ))}
@@ -94,7 +98,7 @@ export default function Nav() {
                 onClick={() => trackCallClick('mobile_menu')}
               >
                 <Phone size={16} />
-                Call Today
+                Call {business.phoneDisplay}
               </a>
             </div>
           </nav>

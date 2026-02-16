@@ -1,10 +1,29 @@
-import { MapPin, Phone } from 'lucide-react'
+import { ArrowRight, MapPin, Phone } from 'lucide-react'
 import { business } from '../data/siteData'
-import { trackCallClick } from '../utils/analytics'
+import { trackCallClick, trackEvent } from '../utils/analytics'
 
 export default function Footer() {
   return (
     <footer className="site-footer">
+      <div className="footer-top-cta">
+        <div className="container footer-top-cta-inner">
+          <div>
+            <p className="footer-cta-kicker">Need Exterior Cleaning This Week?</p>
+            <h3>Get fast scheduling and a free estimate.</h3>
+          </div>
+          <div className="footer-cta-actions">
+            <a href="/quote" className="btn btn-primary" onClick={() => trackEvent('cta_click', { source: 'footer_estimate' })}>
+              Get Free Estimate
+              <ArrowRight size={16} />
+            </a>
+            <a href={`tel:${business.phoneHref}`} className="btn footer-call-btn" onClick={() => trackCallClick('footer_cta')}>
+              <Phone size={16} />
+              Call {business.phoneDisplay}
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div className="container footer-grid">
         <div>
           <img src="/logo.png" alt="704 Pressure Washing Services" className="footer-logo" />
@@ -30,8 +49,6 @@ export default function Footer() {
             <li><a href="/our-story">Our Story</a></li>
             <li><a href="/our-work">Our Work</a></li>
             <li><a href="/areas-served">Areas Served</a></li>
-            <li><a href="/blog">Blog</a></li>
-            <li><a href="/faqs">FAQs</a></li>
             <li><a href="/contact">Contact Us</a></li>
           </ul>
         </div>

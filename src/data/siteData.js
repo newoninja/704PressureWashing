@@ -7,7 +7,7 @@ export const business = {
   address: '303 Summermore Dr, Charlotte, NC 28270',
   hours: 'Monday - Sunday, 9:00 AM - 9:00 PM',
   rating: '5.0',
-  reviewCount: '58+',
+  reviewCount: '86',
   years: '5+',
   reviewUrl: 'https://search.google.com/local/writereview?placeid=ChIJ6x_X-XjFQwgRaVFtSgZ7Www',
   mapsUrl: 'https://maps.app.goo.gl/oCV4sjnE2osYvFN57',
@@ -33,6 +33,7 @@ export const services = [
     slug: 'pressure-washing',
     icon: Droplets,
     title: 'Pressure Washing',
+    bestFor: 'Best for driveways, sidewalks, patios',
     short: 'Restore hard surfaces like driveways, sidewalks, and patios with a deep exterior clean.',
     hero: 'Dependable pressure washing that restores curb appeal and removes years of buildup.',
     details: [
@@ -45,6 +46,7 @@ export const services = [
     slug: 'soft-washing',
     icon: CloudRain,
     title: 'Soft Washing',
+    bestFor: 'Best for siding, stucco, painted exteriors',
     short: 'Low-pressure cleaning designed for delicate surfaces like siding, stucco, and roofing.',
     hero: 'Protect your home with soft washing designed for delicate materials and long-term results.',
     details: [
@@ -57,6 +59,7 @@ export const services = [
     slug: 'window-cleaning',
     icon: Sparkles,
     title: 'Pure Water Window Cleaning',
+    bestFor: 'Best for streak-free exterior glass',
     short: 'Streak-free, chemical-free window cleaning for residential and commercial properties.',
     hero: 'Pure water technology delivers clean, clear windows without soap residue or streaking.',
     details: [
@@ -69,6 +72,7 @@ export const services = [
     slug: 'gutter-brightening',
     icon: PaintBucket,
     title: 'Gutter Brightening',
+    bestFor: 'Best for oxidation and tiger striping',
     short: 'Remove oxidation and tiger striping from gutter exteriors to refresh your home facade.',
     hero: 'Bring back bright, clean gutter exteriors with targeted oxidation and streak treatment.',
     details: [
