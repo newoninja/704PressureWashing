@@ -723,21 +723,21 @@ p {
   border-left: 4px solid var(--brand-yellow);
 }
 
-.review-grid-animated {
-  transform-origin: center top;
-  animation: reviewSetIn 420ms cubic-bezier(0.22, 1, 0.36, 1);
+.review-slider-wrap {
+  overflow: hidden;
+  margin: 0 -0.5rem;
+  padding: 0 0.5rem;
 }
 
-.review-grid-next .review-card-enter {
-  opacity: 0;
-  transform: translateX(22px) translateY(6px) scale(0.985);
-  animation: reviewCardInNext 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.review-slider-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 450ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: transform;
 }
 
-.review-grid-prev .review-card-enter {
-  opacity: 0;
-  transform: translateX(-22px) translateY(6px) scale(0.985);
-  animation: reviewCardInPrev 520ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+.review-slide-card {
+  flex-shrink: 0;
 }
 
 .review-card-top {
@@ -1122,38 +1122,6 @@ a:focus-visible {
   }
 }
 
-@keyframes reviewSetIn {
-  from {
-    opacity: 0.6;
-    transform: translateY(4px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes reviewCardInNext {
-  from {
-    opacity: 0;
-    transform: translateX(22px) translateY(6px) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) translateY(0) scale(1);
-  }
-}
-
-@keyframes reviewCardInPrev {
-  from {
-    opacity: 0;
-    transform: translateX(-22px) translateY(6px) scale(0.985);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0) translateY(0) scale(1);
-  }
-}
 
 @media (max-width: 1120px) {
   .desktop-nav {

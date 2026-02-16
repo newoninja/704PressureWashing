@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
 import useReveal from '../useReveal'
 import { business } from '../data/siteData'
@@ -20,7 +20,6 @@ export default function Testimonials() {
   const [reviews, setReviews] = useState(fallbackReviews)
   const [index, setIndex] = useState(0)
   const [cardsPerView, setCardsPerView] = useState(3)
-  const [direction, setDirection] = useState('next')
   const sectionRef = useReveal()
 
   useEffect(() => {
@@ -67,17 +66,17 @@ export default function Testimonials() {
     if (index > maxIndex) setIndex(maxIndex)
   }, [index, maxIndex])
 
-  const visible = useMemo(() => reviews.slice(index, index + cardsPerView), [reviews, index, cardsPerView])
-
   function goPrev() {
-    setDirection('prev')
     setIndex((prev) => Math.max(0, prev - 1))
   }
 
   function goNext() {
-    setDirection('next')
     setIndex((prev) => Math.min(maxIndex, prev + 1))
   }
+
+  const gapPx = 16
+  const slidePercent = 100 / cardsPerView
+  const offset = index * slidePercent
 
   return (
     <section className="section section-muted" ref={sectionRef}>
@@ -90,29 +89,32 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div
-          key={`${index}-${cardsPerView}-${direction}`}
-          className={`review-grid review-grid-animated review-grid-${direction} reveal reveal-up`}
-          style={{ animationDelay: '0.15s' }}
-        >
-          {visible.map((review, reviewIndex) => (
-            <article
-              key={`${review.name}-${review.date}-${reviewIndex}`}
-              className="review-card-v2 review-card-enter"
-              style={{ animationDelay: `${reviewIndex * 70}ms` }}
-            >
-              <div className="review-card-top">
-                <strong className="review-name">{review.name}</strong>
-                <div className="review-stars" aria-label={`${review.rating || 5} star rating`}>
-                  {Array.from({ length: review.rating || 5 }).map((_, i) => (
-                    <Star key={i} size={14} fill="currentColor" />
-                  ))}
+        <div className="review-slider-wrap reveal reveal-up" style={{ animationDelay: '0.15s' }}>
+          <div
+            className="review-slider-track"
+            style={{
+              transform: `translateX(calc(-${offset}% - ${index * gapPx}px))`,
+            }}
+          >
+            {reviews.map((review, reviewIndex) => (
+              <article
+                key={`${review.name}-${review.date}-${reviewIndex}`}
+                className="review-card-v2 review-slide-card"
+                style={{ width: `calc(${slidePercent}% - ${gapPx - gapPx / cardsPerView}px)` }}
+              >
+                <div className="review-card-top">
+                  <strong className="review-name">{review.name}</strong>
+                  <div className="review-stars" aria-label={`${review.rating || 5} star rating`}>
+                    {Array.from({ length: review.rating || 5 }).map((_, i) => (
+                      <Star key={i} size={14} fill="currentColor" />
+                    ))}
+                  </div>
                 </div>
-              </div>
-              <p className="review-text">{review.text}</p>
-              <div className="review-meta">Google Review • {formatDate(review.date)}</div>
-            </article>
-          ))}
+                <p className="review-text">{review.text}</p>
+                <div className="review-meta">Google Review • {formatDate(review.date)}</div>
+              </article>
+            ))}
+          </div>
         </div>
 
         <div className="reviews-nav">
