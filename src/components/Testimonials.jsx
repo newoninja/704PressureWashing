@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
 import useReveal from '../useReveal'
 import { business } from '../data/siteData'
+
+const AUTO_PLAY_MS = 4000
 
 const fallbackReviews = [
   {
@@ -61,18 +63,28 @@ export default function Testimonials() {
   }, [])
 
   const maxIndex = Math.max(0, reviews.length - cardsPerView)
+  const paused = useRef(false)
 
   useEffect(() => {
     if (index > maxIndex) setIndex(maxIndex)
   }, [index, maxIndex])
 
+  const goNext = useCallback(() => {
+    setIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
+  }, [maxIndex])
+
   function goPrev() {
     setIndex((prev) => Math.max(0, prev - 1))
   }
 
-  function goNext() {
-    setIndex((prev) => Math.min(maxIndex, prev + 1))
-  }
+  // Auto-play
+  useEffect(() => {
+    if (maxIndex <= 0) return
+    const id = setInterval(() => {
+      if (!paused.current) goNext()
+    }, AUTO_PLAY_MS)
+    return () => clearInterval(id)
+  }, [maxIndex, goNext])
 
   const gapPx = 16
   const slidePercent = 100 / cardsPerView
@@ -89,7 +101,12 @@ export default function Testimonials() {
           </p>
         </div>
 
-        <div className="review-slider-wrap reveal reveal-up" style={{ animationDelay: '0.15s' }}>
+        <div
+          className="review-slider-wrap reveal reveal-up"
+          style={{ animationDelay: '0.15s' }}
+          onMouseEnter={() => { paused.current = true }}
+          onMouseLeave={() => { paused.current = false }}
+        >
           <div
             className="review-slider-track"
             style={{
