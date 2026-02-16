@@ -33,6 +33,21 @@ export default function Areas() {
             <span>{areas.length} Communities Covered</span>
             <span>Fast Scheduling Available</span>
           </div>
+
+          <div className="area-social-rail" aria-label="Social links">
+            <a className="area-social-link area-social-facebook" href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <Facebook size={16} />
+              <span>Facebook</span>
+            </a>
+            <a className="area-social-link area-social-instagram" href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Instagram size={16} />
+              <span>Instagram</span>
+            </a>
+            <a className="area-social-link area-social-maps" href={business.mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
+              <MapPin size={16} />
+              <span>Map</span>
+            </a>
+          </div>
         </div>
 
         <div className="coverage-map-card reveal reveal-left" style={{ animationDelay: '0.2s' }}>
@@ -54,20 +69,6 @@ export default function Areas() {
           </a>
         </div>
 
-        <div className="area-social-rail" aria-label="Social links">
-          <a className="area-social-link area-social-facebook" href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-            <Facebook size={16} />
-            <span>Facebook</span>
-          </a>
-          <a className="area-social-link area-social-instagram" href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <Instagram size={16} />
-            <span>Instagram</span>
-          </a>
-          <a className="area-social-link area-social-maps" href={business.mapsUrl} target="_blank" rel="noopener noreferrer" aria-label="Google Maps">
-            <MapPin size={16} />
-            <span>Map</span>
-          </a>
-        </div>
       </div>
     </section>
   )

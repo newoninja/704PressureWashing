@@ -844,11 +844,9 @@ p {
 }
 
 .area-social-rail {
-  position: absolute;
-  left: -74px;
-  top: 45%;
-  transform: translateY(-50%);
-  display: grid;
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
   gap: 0.58rem;
 }
 
@@ -1454,10 +1452,7 @@ a:focus-visible {
   }
 
   .area-social-rail {
-    position: static;
-    transform: none;
-    grid-auto-flow: column;
-    justify-content: start;
+    gap: 0.52rem;
   }
 
   .area-social-link {
