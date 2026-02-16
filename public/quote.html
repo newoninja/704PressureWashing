@@ -205,6 +205,7 @@
                     <p id="house-sqft-label" class="text-xs text-gray-400 ml-10">Calculating...</p>
                   </div>
                   <div class="text-right">
+                    <button id="toggle-house" type="button" class="mb-2 inline-flex items-center justify-center rounded-full border border-water-300 bg-water-100 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-water-700 transition hover:bg-water-200">Included</button>
                     <p id="house-price" class="font-heading text-2xl text-brand-dark leading-none">--</p>
                     <p class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">estimated</p>
                   </div>
@@ -238,6 +239,7 @@
                     <p id="driveway-sqft-label" class="text-xs text-gray-400 ml-10">Draw your driveway on the map</p>
                   </div>
                   <div class="text-right">
+                    <button id="toggle-driveway" type="button" class="mb-2 inline-flex items-center justify-center rounded-full border border-water-300 bg-water-100 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-water-700 transition hover:bg-water-200">Included</button>
                     <p id="driveway-price" class="font-heading text-2xl text-gray-300 leading-none">--</p>
                     <p class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">estimated</p>
                   </div>
@@ -328,6 +330,8 @@
     let housePrice = 0;
     let drivewaySqft = 0;
     let drivewayPrice = 0;
+    let includeHouse = true;
+    let includeDriveway = true;
 
     // ──────────── DOM REFS ────────────
     const $ = (id) => document.getElementById(id);
@@ -346,10 +350,13 @@
     const houseSqftLabel = $('house-sqft-label');
     const houseLoading = $('house-loading');
     const houseManual = $('house-manual');
+    const toggleHouseBtn = $('toggle-house');
+    const cardHouse = $('card-house');
     const drivewayPriceEl = $('driveway-price');
     const drivewaySqftLabel = $('driveway-sqft-label');
     const cardDriveway = $('card-driveway');
     const drivewayIconWrap = $('driveway-icon-wrap');
+    const toggleDrivewayBtn = $('toggle-driveway');
     const totalPriceEl = $('total-price');
     const btnBook = $('btn-book');
     const modalBook = $('modal-book');
@@ -403,6 +410,8 @@
       btnClearDrawing.addEventListener('click', clearDrawing);
       $('btn-manual-calc').addEventListener('click', manualCalc);
       $('manual-sqft').addEventListener('keydown', (e) => { if (e.key === 'Enter') manualCalc(); });
+      toggleHouseBtn.addEventListener('click', () => setServiceIncluded('house', !includeHouse));
+      toggleDrivewayBtn.addEventListener('click', () => setServiceIncluded('driveway', !includeDriveway));
       btnBook.addEventListener('click', openBookModal);
       $('modal-overlay').addEventListener('click', closeBookModal);
       $('btn-modal-cancel').addEventListener('click', closeBookModal);
@@ -418,6 +427,8 @@
       housePrice = 0;
       drivewaySqft = 0;
       drivewayPrice = 0;
+      includeHouse = true;
+      includeDriveway = true;
       drawnPolygons = [];
 
       // Switch screens
@@ -441,6 +452,8 @@
       btnBook.disabled = true;
       areaBadge.classList.add('hidden');
       btnClearDrawing.classList.add('hidden');
+      setServiceIncluded('house', true, true);
+      setServiceIncluded('driveway', true, true);
 
       // Init map
       const loc = selectedPlace.geometry.location;
@@ -448,6 +461,55 @@
 
       // Fetch solar data
       fetchSolarData(loc.lat(), loc.lng());
+    }
+
+    function setToggleVisual(btn, included) {
+      if (included) {
+        btn.textContent = 'Included';
+        btn.classList.remove('bg-gray-100', 'text-gray-500', 'border-gray-300');
+        btn.classList.add('bg-water-100', 'text-water-700', 'border-water-300', 'hover:bg-water-200');
+      } else {
+        btn.textContent = 'Excluded';
+        btn.classList.remove('bg-water-100', 'text-water-700', 'border-water-300', 'hover:bg-water-200');
+        btn.classList.add('bg-gray-100', 'text-gray-500', 'border-gray-300');
+      }
+    }
+
+    function setServiceIncluded(service, included, force = false) {
+      if (service === 'house') {
+        includeHouse = included;
+        setToggleVisual(toggleHouseBtn, includeHouse);
+        housePriceEl.classList.toggle('text-gray-300', !includeHouse);
+        housePriceEl.classList.toggle('text-brand-dark', includeHouse);
+        cardHouse.classList.toggle('opacity-60', !includeHouse);
+        if (!includeHouse) {
+          houseManual.classList.add('hidden');
+          houseLoading.classList.add('hidden');
+          houseSqftLabel.textContent = houseSqft > 0 ? `${houseSqft.toLocaleString()} sq ft (excluded)` : 'Excluded from total';
+        } else if (!force) {
+          houseSqftLabel.textContent = houseSqft > 0 ? `${houseSqft.toLocaleString()} sq ft` : 'Calculating...';
+          if (houseSqft === 0) houseLoading.classList.remove('hidden');
+        }
+      }
+
+      if (service === 'driveway') {
+        includeDriveway = included;
+        setToggleVisual(toggleDrivewayBtn, includeDriveway);
+        btnDraw.disabled = !includeDriveway;
+        btnDraw.classList.toggle('opacity-50', !includeDriveway);
+        btnDraw.classList.toggle('cursor-not-allowed', !includeDriveway);
+        if (!includeDriveway) {
+          drawHint.classList.add('hidden');
+          drivewaySqftLabel.textContent = drivewaySqft > 0 ? `${drivewaySqft.toLocaleString()} sq ft (excluded)` : 'Excluded from total';
+          if (!force) clearDrawing();
+        } else if (drivewaySqft > 0) {
+          drivewaySqftLabel.textContent = drivewaySqft.toLocaleString() + ' sq ft measured';
+        } else {
+          drivewaySqftLabel.textContent = 'Draw your driveway on the map';
+        }
+      }
+
+      updateTotal();
     }
 
     function goBack() {
@@ -582,10 +644,10 @@
       areaBadge.classList.add('hidden');
       btnClearDrawing.classList.add('hidden');
       drivewayPriceEl.textContent = '--';
-      drivewayPriceEl.classList.add('text-gray-300');
-      drivewayPriceEl.classList.remove('text-brand-dark');
-      drivewaySqftLabel.textContent = 'Draw your driveway on the map';
-      cardDriveway.classList.add('opacity-60');
+      drivewayPriceEl.classList.toggle('text-gray-300', !includeDriveway || drivewaySqft === 0);
+      drivewayPriceEl.classList.toggle('text-brand-dark', includeDriveway && drivewaySqft > 0);
+      drivewaySqftLabel.textContent = includeDriveway ? 'Draw your driveway on the map' : 'Excluded from total';
+      cardDriveway.classList.toggle('opacity-60', !includeDriveway || drivewaySqft === 0);
       drivewayIconWrap.classList.remove('bg-water-100', 'text-water-600');
       drivewayIconWrap.classList.add('bg-gray-100', 'text-gray-500');
       updateTotal();
@@ -608,7 +670,9 @@
       drivewayPriceEl.textContent = '$' + Math.round(drivewayPrice).toLocaleString();
       drivewayPriceEl.classList.remove('text-gray-300');
       drivewayPriceEl.classList.add('text-brand-dark');
-      drivewaySqftLabel.textContent = drivewaySqft.toLocaleString() + ' sq ft measured';
+      drivewaySqftLabel.textContent = includeDriveway
+        ? drivewaySqft.toLocaleString() + ' sq ft measured'
+        : drivewaySqft.toLocaleString() + ' sq ft (excluded)';
       cardDriveway.classList.remove('opacity-60');
       drivewayIconWrap.classList.add('bg-water-100', 'text-water-600');
       drivewayIconWrap.classList.remove('bg-gray-100', 'text-gray-500');
@@ -670,7 +734,9 @@
 
     // ──────────── TOTAL CALCULATION ────────────
     function updateTotal() {
-      let total = housePrice + drivewayPrice;
+      const includedHousePrice = includeHouse ? housePrice : 0;
+      const includedDrivewayPrice = includeDriveway ? drivewayPrice : 0;
+      let total = includedHousePrice + includedDrivewayPrice;
       if (total > 0 && total < MINIMUM_JOB_PRICE) {
         total = MINIMUM_JOB_PRICE;
       }
@@ -688,7 +754,7 @@
 
     // ──────────── BOOKING MODAL ────────────
     function openBookModal() {
-      let total = Math.max(housePrice + drivewayPrice, MINIMUM_JOB_PRICE);
+      let total = Math.max((includeHouse ? housePrice : 0) + (includeDriveway ? drivewayPrice : 0), MINIMUM_JOB_PRICE);
       modalTotal.textContent = '$' + Math.round(total).toLocaleString();
       modalBook.classList.remove('hidden');
     }
@@ -711,8 +777,14 @@
       $('book-name').classList.remove('border-red-400');
       $('book-phone').classList.remove('border-red-400');
 
-      let total = Math.max(Math.round(housePrice + drivewayPrice), MINIMUM_JOB_PRICE);
+      let total = Math.max(Math.round((includeHouse ? housePrice : 0) + (includeDriveway ? drivewayPrice : 0)), MINIMUM_JOB_PRICE);
       const address = displayAddress.textContent;
+      const houseLine = includeHouse
+        ? `House Wash (Siding): $${Math.round(housePrice)} (${houseSqft.toLocaleString()} sq ft)\n`
+        : 'House Wash (Siding): Excluded\n';
+      const drivewayLine = includeDriveway
+        ? `Driveway/Flatwork: $${Math.round(drivewayPrice)} (${drivewaySqft.toLocaleString()} sq ft)\n`
+        : 'Driveway/Flatwork: Excluded\n';
 
       // Build mailto
       const subject = encodeURIComponent(`Instant Quote Request - $${total}`);
@@ -723,8 +795,8 @@
         `Phone: ${phone}\n` +
         `Email: ${email}\n` +
         `Address: ${address}\n\n` +
-        `House Wash (Siding): $${Math.round(housePrice)} (${houseSqft.toLocaleString()} sq ft)\n` +
-        `Driveway/Flatwork: $${Math.round(drivewayPrice)} (${drivewaySqft.toLocaleString()} sq ft)\n` +
+        houseLine +
+        drivewayLine +
         `━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
         `ESTIMATED TOTAL: $${total}\n\n` +
         `Sent from 704 Pressure Washing Instant Quote Tool`
