@@ -25,7 +25,7 @@ export default function Footer() {
       </div>
 
       <div className="container footer-grid">
-        <div>
+        <div className="footer-brand">
           <img src="/logo.png" alt="704 Pressure Washing Services" className="footer-logo" />
           <p>
             Professional pressure washing, soft washing, window cleaning, and gutter brightening for
@@ -33,7 +33,7 @@ export default function Footer() {
           </p>
         </div>
 
-        <div>
+        <div className="footer-services">
           <h4>Services</h4>
           <ul>
             <li><a href="/pressure-washing">Pressure Washing</a></li>
@@ -43,7 +43,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="footer-company">
           <h4>Company</h4>
           <ul>
             <li><a href="/our-story">Our Story</a></li>
@@ -53,7 +53,7 @@ export default function Footer() {
           </ul>
         </div>
 
-        <div>
+        <div className="footer-contact">
           <h4>Contact</h4>
           <ul>
             <li>
