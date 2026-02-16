@@ -68,7 +68,7 @@ export default function Footer() {
               <MapPin size={14} />
               {business.address}
             </li>
-            <li><a href="https://www.facebook.com/people/704Pressurewashingservices" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+            <li><a href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
             <li><a href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer">Instagram</a></li>
           </ul>
         </div>

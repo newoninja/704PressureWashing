@@ -55,7 +55,7 @@ export default function Areas() {
         </div>
 
         <div className="area-social-rail" aria-label="Social links">
-          <a href="https://www.facebook.com/people/704Pressurewashingservices" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+          <a href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
             <Facebook size={16} />
           </a>
           <a href="https://www.instagram.com/704pressurewashingservices" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
