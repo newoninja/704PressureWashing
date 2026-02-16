@@ -1280,7 +1280,7 @@ a:focus-visible {
 
 .footer-bottom {
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
 }
 
 .footer-bottom-inner {
@@ -1294,6 +1294,12 @@ a:focus-visible {
 .footer-bottom-links {
   display: flex;
   gap: 1.2rem;
+}
+
+.footer-copyright {
+  margin: 0;
+  line-height: 1.4;
+  color: #c8d4e8;
 }
 
 .page-header {
@@ -1615,6 +1621,10 @@ a:focus-visible {
 
   .footer-bottom-links {
     gap: 1rem;
+  }
+
+  .footer-copyright {
+    font-size: 0.8rem;
   }
 }
 

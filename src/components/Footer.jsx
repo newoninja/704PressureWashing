@@ -3,6 +3,8 @@ import { business } from '../data/siteData'
 import { trackCallClick, trackEvent } from '../utils/analytics'
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear()
+
   return (
     <footer className="site-footer">
       <div className="footer-top-cta">
@@ -74,7 +76,7 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <div className="container footer-bottom-inner">
-          <p>Copyright 2026 704 Pressure Washing Services. All rights reserved.</p>
+          <p className="footer-copyright">© {currentYear} 704 Pressure Washing Services · All rights reserved.</p>
           <div className="footer-bottom-links">
             <a href="/privacy-policy">Privacy Policy</a>
             <a href="/terms">Terms</a>
