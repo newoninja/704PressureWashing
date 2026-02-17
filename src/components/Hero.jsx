@@ -1,26 +1,52 @@
-import { ArrowRight, ShieldCheck, Star, ThumbsUp } from 'lucide-react'
+import { ArrowRight, MoveHorizontal, Star, UserRound } from 'lucide-react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { business } from '../data/business'
+import { getGalleryProjects } from '../data/contentApi'
+import useAsyncData from '../hooks/useAsyncData'
 import { trackCallClick, trackEvent } from '../utils/analytics'
 import useGooglePlaceStats from '../hooks/useGooglePlaceStats'
 
 export default function Hero() {
   const { ratingText, reviewCountText } = useGooglePlaceStats()
+  const { data: galleryProjects } = useAsyncData(getGalleryProjects, [])
+  const [split, setSplit] = useState(52)
+  const [hasTeamPhoto, setHasTeamPhoto] = useState(true)
+
+  const featuredProject = useMemo(() => galleryProjects[0] || null, [galleryProjects])
+  const beforeImage = featuredProject?.before || '/logo.png'
+  const afterImage = featuredProject?.after || '/logo.png'
+  const beforeIsStyledFallback = beforeImage === afterImage
 
   return (
     <section className="hero-section">
+      <video
+        className="hero-video-bg"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      >
+        <source src="/hero-cleaning.mp4" type="video/mp4" />
+        <source src="https://videos.pexels.com/video-files/5698710/5698710-hd_1920_1080_24fps.mp4" type="video/mp4" />
+      </video>
       <div className="hero-overlay" />
       <div className="container hero-grid">
         <div className="hero-content">
           <p className="eyebrow">Licensed and Insured Exterior Cleaning</p>
-          <h1>Keep Your Property Looking Its Best</h1>
+          <h1>
+            Keep Your Property
+            <br />
+            Looking Its <span className="hero-headline-accent">Best</span>
+          </h1>
           <p className="hero-subhead">
             Pressure washing, soft washing, window cleaning, and gutter brightening for Charlotte,
             Matthews, Indian Trail, and surrounding communities.
           </p>
 
           <div className="hero-actions">
-            <Link to="/quote" className="btn btn-primary btn-lg" onClick={() => trackEvent('cta_click', { source: 'hero_estimate' })}>
+            <Link id="hero-primary-cta" to="/quote" className="btn btn-primary btn-lg" onClick={() => trackEvent('cta_click', { source: 'hero_estimate' })}>
               Get Free Estimate
               <ArrowRight size={16} />
             </Link>
@@ -85,23 +111,55 @@ export default function Hero() {
           </div>
         </div>
 
-        <div className="hero-card" aria-hidden="true">
-          <img src="/logo.png" alt="704 Pressure Washing Services" />
-          <p>Experience Exterior Cleaning Like No Other</p>
-          <ul>
-            <li>
-              <ShieldCheck size={16} />
-              Licensed and insured
-            </li>
-            <li>
-              <Star size={16} />
-              {reviewCountText}+ five-star reviews
-            </li>
-            <li>
-              <ThumbsUp size={16} />
-              100% satisfaction guarantee
-            </li>
-          </ul>
+        <div className="hero-visual-stack" aria-label="Before and after cleaning preview">
+          <div className="before-after-card">
+            <div className="before-after-head">
+              <p>Before / After</p>
+              <span>Drag to compare results</span>
+            </div>
+            <div className="before-after-frame">
+              <img className="before-after-image before-after-after" src={afterImage} alt="Cleaned driveway after pressure washing" />
+              <div className="before-after-before-layer" style={{ width: `${split}%` }}>
+                <img
+                  className={`before-after-image before-after-before ${beforeIsStyledFallback ? 'before-after-before-fallback' : ''}`}
+                  src={beforeImage}
+                  alt="Driveway before pressure washing service"
+                />
+              </div>
+              <div className="before-after-divider" style={{ left: `${split}%` }}>
+                <span><MoveHorizontal size={14} /></span>
+              </div>
+              <input
+                type="range"
+                min="8"
+                max="92"
+                value={split}
+                onChange={(event) => setSplit(Number(event.target.value))}
+                className="before-after-slider"
+                aria-label="Slide to compare before and after cleaning"
+              />
+              <span className="before-label">Before</span>
+              <span className="after-label">After</span>
+            </div>
+          </div>
+
+          <div className="hero-team-card">
+            {hasTeamPhoto ? (
+              <img
+                src="/team-photo.jpg"
+                alt="704 Pressure Washing team"
+                onError={() => setHasTeamPhoto(false)}
+              />
+            ) : (
+              <div className="hero-team-placeholder" aria-hidden="true">
+                <UserRound size={42} />
+              </div>
+            )}
+            <div>
+              <p>Owner-led, local service you can trust.</p>
+              {!hasTeamPhoto && <small>Add `public/team-photo.jpg` to show your real team photo.</small>}
+            </div>
+          </div>
         </div>
       </div>
     </section>

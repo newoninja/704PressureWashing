@@ -1,5 +1,6 @@
 import Hero from '../components/Hero'
 import Services from '../components/Services'
+import ResultsPreview from '../components/ResultsPreview'
 import Guarantee from '../components/Guarantee'
 import Testimonials from '../components/Testimonials'
 import SEO from '../components/SEO'
@@ -16,6 +17,7 @@ export default function HomePage() {
       />
       <Hero />
       <Services />
+      <ResultsPreview />
       <Guarantee />
       <Testimonials />
     </>
