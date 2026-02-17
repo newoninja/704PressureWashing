@@ -1,5 +1,6 @@
 import { ArrowRight, Facebook, Instagram, MapPin, Phone } from 'lucide-react'
-import { business } from '../data/siteData'
+import { Link } from 'react-router-dom'
+import { business } from '../data/business'
 import { trackCallClick, trackEvent } from '../utils/analytics'
 
 export default function Footer() {
@@ -14,10 +15,10 @@ export default function Footer() {
             <h3>Get fast scheduling and a free estimate.</h3>
           </div>
           <div className="footer-cta-actions">
-            <a href="/quote" className="btn btn-primary" onClick={() => trackEvent('cta_click', { source: 'footer_estimate' })}>
+            <Link to="/quote" className="btn btn-primary" onClick={() => trackEvent('cta_click', { source: 'footer_estimate' })}>
               Get Free Estimate
               <ArrowRight size={16} />
-            </a>
+            </Link>
             <a href={`tel:${business.phoneHref}`} className="btn footer-call-btn" onClick={() => trackCallClick('footer_cta')}>
               <Phone size={16} />
               Call {business.phoneDisplay}
@@ -38,20 +39,20 @@ export default function Footer() {
         <div className="footer-services">
           <h4>Services</h4>
           <ul>
-            <li><a href="/pressure-washing">Pressure Washing</a></li>
-            <li><a href="/soft-washing">Soft Washing</a></li>
-            <li><a href="/window-cleaning">Window Cleaning</a></li>
-            <li><a href="/gutter-brightening">Gutter Brightening</a></li>
+            <li><Link to="/pressure-washing">Pressure Washing</Link></li>
+            <li><Link to="/soft-washing">Soft Washing</Link></li>
+            <li><Link to="/window-cleaning">Window Cleaning</Link></li>
+            <li><Link to="/gutter-brightening">Gutter Brightening</Link></li>
           </ul>
         </div>
 
         <div className="footer-company">
           <h4>Company</h4>
           <ul>
-            <li><a href="/our-story">Our Story</a></li>
-            <li><a href="/our-work">Our Work</a></li>
-            <li><a href="/areas-served">Areas Served</a></li>
-            <li><a href="/contact">Contact Us</a></li>
+            <li><Link to="/our-story">Our Story</Link></li>
+            <li><Link to="/our-work">Our Work</Link></li>
+            <li><Link to="/areas-served">Areas Served</Link></li>
+            <li><Link to="/contact">Contact Us</Link></li>
           </ul>
         </div>
 
@@ -88,8 +89,8 @@ export default function Footer() {
         <div className="container footer-bottom-inner">
           <p className="footer-copyright">© {currentYear} 704 Pressure Washing Services · All rights reserved.</p>
           <div className="footer-bottom-links">
-            <a href="/privacy-policy">Privacy Policy</a>
-            <a href="/terms">Terms</a>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms">Terms</Link>
           </div>
         </div>
       </div>

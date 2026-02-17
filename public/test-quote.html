@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instant Quote (Test) | 704 Pressure Washing Services</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: { dark: '#0c1730', soft: '#162646', blue: '#1a73e8' },
+            water: { 50: '#f0f9ff', 100: '#e0f2fe', 200: '#b9e5fd', 300: '#7dd3fc', 400: '#38bdf8', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1' },
+          },
+          fontFamily: {
+            heading: ['Oswald', 'sans-serif'],
+            body: ['Roboto', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    h1, h2, h3, h4, .font-heading { font-family: 'Oswald', sans-serif; }
+    .pac-container { z-index: 10000; border-radius: 12px; border: 0; box-shadow: 0 12px 40px rgba(0,0,0,0.15); margin-top: 6px; font-family: 'Roboto', sans-serif; }
+    .pac-item { padding: 10px 14px; cursor: pointer; border-color: #f1f5f9; }
+    .pac-item:hover { background: #f0f9ff; }
+    .pac-icon { display: none; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
+    @keyframes highlightPulse { 0%, 100% { opacity: 0.35; } 50% { opacity: 0.6; } }
+    .animate-fade-up { animation: fadeUp .5s cubic-bezier(.22,.61,.36,1) both; }
+    .animate-pulse-slow { animation: pulse 2s ease-in-out infinite; }
+    .price-update { animation: fadeUp .35s cubic-bezier(.22,.61,.36,1) both; }
+    #map { min-height: 500px; }
+    .drawing-active { cursor: crosshair !important; }
+    .tooltip-arrow::after { content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); border: 6px solid transparent; border-top-color: #0c1730; }
+    .surface-btn { transition: all .15s; }
+    .surface-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .surface-btn:active { transform: translateY(0); }
+    .surface-row { transition: background-color .15s; cursor: pointer; border-radius: 6px; padding: 4px 6px; margin: -4px -6px; }
+    .surface-row:hover, .surface-row.highlighted { background-color: #f0f9ff; }
+  </style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+  <!-- ════════════ HERO / ADDRESS INPUT ════════════ -->
+  <div id="screen-address" class="min-h-screen flex flex-col">
+    <header class="bg-brand-dark text-white">
+      <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        <a href="/" target="_top" class="flex items-center gap-3 no-underline text-white hover:opacity-80 transition">
+          <img src="/logo.png" alt="704 Pressure Washing" class="w-10 h-10 rounded-full" onerror="this.style.display='none'" />
+          <div>
+            <p class="font-heading text-lg leading-none tracking-wide">704 Pressure Washing</p>
+            <p class="text-xs text-gray-400 uppercase tracking-wider">Charlotte, NC</p>
+          </div>
+        </a>
+        <div class="flex items-center gap-3">
+          <a href="/" target="_top" class="hidden sm:inline-flex items-center gap-2 text-sm text-water-300 hover:text-white transition no-underline">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+            Back to Site
+          </a>
+          <a href="tel:7046516329" class="hidden sm:inline-flex items-center gap-2 bg-water-500 hover:bg-water-600 text-white text-sm font-bold uppercase tracking-wide px-4 py-2 rounded-full transition no-underline">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            (704) 651-6329
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 flex items-center justify-center bg-gradient-to-br from-brand-dark via-brand-soft to-water-700 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-[0.04]" style="background-image: linear-gradient(to right, #fff 1px, transparent 1px), linear-gradient(to bottom, #fff 1px, transparent 1px); background-size: 40px 40px;"></div>
+      <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-water-500/10 rounded-full blur-3xl"></div>
+
+      <div class="relative z-10 w-full max-w-2xl mx-auto px-4 py-16 text-center">
+        <div class="animate-fade-up">
+          <p class="font-heading text-water-300 uppercase tracking-[0.12em] text-sm mb-3">Instant Online Estimate</p>
+          <h1 class="font-heading text-white text-4xl sm:text-5xl md:text-6xl uppercase leading-[1.05] mb-4">
+            Get Your Price<br/>In 60 Seconds
+          </h1>
+          <p class="text-gray-300 text-lg mb-8 max-w-lg mx-auto">
+            Enter your address and mark your concrete surfaces on the satellite view. Get an instant pressure washing quote.
+          </p>
+        </div>
+
+        <div class="animate-fade-up" style="animation-delay: .15s">
+          <div class="relative max-w-xl mx-auto">
+            <div class="absolute inset-0 bg-water-400/20 rounded-2xl blur-xl"></div>
+            <div class="relative bg-white rounded-2xl shadow-2xl p-2 flex items-center gap-2">
+              <svg class="w-5 h-5 text-water-500 ml-3 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <input id="address-input" type="text" placeholder="Enter your home address..." class="flex-1 text-gray-800 text-lg py-3 px-2 outline-none bg-transparent placeholder:text-gray-400" autocomplete="off" />
+              <button id="btn-go" class="bg-water-500 hover:bg-water-600 text-white font-heading uppercase tracking-wide text-sm px-6 py-3 rounded-xl transition flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                Get Quote
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="animate-fade-up mt-8 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400" style="animation-delay: .3s">
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-water-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            100% Free Estimate
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-water-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+            No Spam, Ever
+          </div>
+          <div class="flex items-center gap-2">
+            <svg class="w-4 h-4 text-water-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            Results in Seconds
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ MAP + QUOTE SCREEN ════════════ -->
+  <div id="screen-quote" class="hidden min-h-screen bg-gray-100">
+    <header class="bg-brand-dark text-white sticky top-0 z-50 shadow-lg">
+      <div class="max-w-[1600px] mx-auto px-4 py-3 flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3 min-w-0">
+          <button id="btn-back" class="w-9 h-9 rounded-lg border border-white/20 flex items-center justify-center hover:bg-white/10 transition flex-shrink-0" title="Start over">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <div class="min-w-0">
+            <p class="font-heading text-sm uppercase tracking-wider text-water-300">Quoting for</p>
+            <p id="display-address" class="text-white truncate text-sm"></p>
+          </div>
+        </div>
+        <a href="tel:7046516329" class="hidden sm:inline-flex items-center gap-2 text-sm text-water-300 hover:text-white transition no-underline">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          (704) 651-6329
+        </a>
+      </div>
+    </header>
+
+    <div class="max-w-[1600px] mx-auto p-4">
+      <div class="flex flex-col lg:flex-row gap-4">
+
+        <!-- Map Column -->
+        <div class="flex-1 flex flex-col gap-3">
+          <!-- Toolbar -->
+          <div class="bg-white rounded-xl shadow-md px-4 py-3">
+            <div class="flex flex-wrap items-center gap-2">
+              <p class="font-heading text-brand-dark uppercase tracking-wide text-xs mr-1">Add Surfaces:</p>
+
+              <!-- Quick-add surface buttons -->
+              <button onclick="addQuickSurface('driveway')" class="surface-btn inline-flex items-center gap-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs font-bold uppercase tracking-wide px-3 py-2 rounded-lg">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 22V2l8 4 8-4v20"/></svg>
+                Driveway
+              </button>
+              <button onclick="addQuickSurface('patio')" class="surface-btn inline-flex items-center gap-1.5 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold uppercase tracking-wide px-3 py-2 rounded-lg">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                Patio
+              </button>
+              <button onclick="addQuickSurface('sidewalk')" class="surface-btn inline-flex items-center gap-1.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold uppercase tracking-wide px-3 py-2 rounded-lg">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+                Sidewalk
+              </button>
+              <button onclick="addQuickSurface('pool_deck')" class="surface-btn inline-flex items-center gap-1.5 bg-cyan-500 hover:bg-cyan-600 text-white text-xs font-bold uppercase tracking-wide px-3 py-2 rounded-lg">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 12c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/><path d="M2 18c2-2 4-2 6 0s4 2 6 0 4-2 6 0"/></svg>
+                Pool Deck
+              </button>
+
+              <div class="h-5 w-px bg-gray-200 mx-1"></div>
+
+              <!-- Freehand draw -->
+              <button id="btn-draw" class="surface-btn inline-flex items-center gap-1.5 bg-gray-600 hover:bg-gray-700 text-white text-xs font-bold uppercase tracking-wide px-3 py-2 rounded-lg">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg>
+                Custom Shape
+              </button>
+
+              <button id="btn-clear-all" class="surface-btn inline-flex items-center gap-1.5 bg-red-100 hover:bg-red-200 text-red-600 text-xs font-bold uppercase tracking-wide px-3 py-2 rounded-lg hidden">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 6h18M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                Clear All
+              </button>
+            </div>
+
+            <!-- Draw hint -->
+            <div id="draw-hint" class="hidden mt-2 text-xs text-water-600 bg-water-50 border border-water-200 px-3 py-1.5 rounded-lg">
+              Click corners on the map to draw your shape. Click the first point to close it.
+            </div>
+
+            <!-- Instruction hint (shown initially) -->
+            <div id="surface-hint" class="mt-2 text-xs text-water-700 bg-water-50 border border-water-200 px-3 py-2.5 rounded-lg flex items-center gap-2">
+              <svg class="w-4 h-4 text-water-500 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/></svg>
+              <span><strong>Mark your concrete surfaces</strong> &mdash; tap Driveway, Patio, or Sidewalk to drop a shape, then drag it into place.</span>
+            </div>
+          </div>
+
+          <!-- Map -->
+          <div class="relative rounded-xl overflow-hidden shadow-lg border border-gray-200 flex-1">
+            <div id="map" class="w-full h-full min-h-[500px] lg:min-h-[600px]"></div>
+            <div id="map-loading" class="absolute inset-0 bg-brand-dark/80 flex items-center justify-center">
+              <div class="text-center text-white">
+                <div class="w-10 h-10 border-4 border-water-400 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
+                <p class="font-heading uppercase tracking-wide text-sm">Loading satellite view...</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quote Panel -->
+        <div class="w-full lg:w-[380px] flex-shrink-0">
+          <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden sticky top-[72px]">
+            <div class="bg-gradient-to-r from-brand-dark to-brand-soft px-5 py-4">
+              <h2 class="font-heading text-white text-xl uppercase tracking-wide">Your Instant Quote</h2>
+              <p class="text-water-300 text-xs mt-1">Prices are estimates. Final price confirmed on-site.</p>
+            </div>
+
+            <div class="p-5 space-y-4">
+              <!-- House Wash -->
+              <div id="card-house" class="border border-gray-200 rounded-xl p-4 relative">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <div class="w-8 h-8 rounded-lg bg-water-100 text-water-600 flex items-center justify-center flex-shrink-0">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M9 22V12h6v10"/></svg>
+                      </div>
+                      <h3 class="font-heading text-brand-dark uppercase tracking-wide text-sm">House Wash (Siding)</h3>
+                    </div>
+                    <p id="house-sqft-label" class="text-xs text-gray-400 ml-10">Calculating...</p>
+                  </div>
+                  <div class="text-right">
+                    <button id="toggle-house" type="button" class="mb-2 inline-flex items-center justify-center rounded-full border border-water-300 bg-water-100 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-water-700 transition hover:bg-water-200">Included</button>
+                    <p id="house-price" class="font-heading text-2xl text-brand-dark leading-none">--</p>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">estimated</p>
+                  </div>
+                </div>
+                <div id="house-loading" class="mt-3">
+                  <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
+                    <div class="h-full bg-water-300 rounded-full animate-pulse-slow" style="width:60%"></div>
+                  </div>
+                </div>
+                <div id="house-manual" class="hidden mt-3 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                  <p class="text-xs text-amber-700 mb-2">We couldn't auto-detect your home size. Enter approximate square footage:</p>
+                  <div class="flex gap-2">
+                    <input id="manual-sqft" type="number" placeholder="e.g. 2000" class="flex-1 border border-amber-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-water-500" />
+                    <button id="btn-manual-calc" class="bg-water-500 hover:bg-water-600 text-white text-xs font-bold uppercase px-4 py-2 rounded-lg transition">Go</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Concrete / Flatwork -->
+              <div id="card-concrete" class="border border-gray-200 rounded-xl p-4">
+                <div class="flex items-start justify-between gap-2">
+                  <div>
+                    <div class="flex items-center gap-2 mb-1">
+                      <div class="w-8 h-8 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center flex-shrink-0" id="concrete-icon-wrap">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 22V2l8 4 8-4v20"/><path d="M4 10h16"/></svg>
+                      </div>
+                      <h3 class="font-heading text-brand-dark uppercase tracking-wide text-sm">Concrete / Flatwork</h3>
+                    </div>
+                    <p id="concrete-sqft-label" class="text-xs text-gray-400 ml-10">Add surfaces on the map above</p>
+                  </div>
+                  <div class="text-right">
+                    <button id="toggle-concrete" type="button" class="mb-2 inline-flex items-center justify-center rounded-full border border-water-300 bg-water-100 px-3 py-1 text-[10px] font-bold uppercase tracking-wide text-water-700 transition hover:bg-water-200">Included</button>
+                    <p id="concrete-price" class="font-heading text-2xl text-gray-300 leading-none">--</p>
+                    <p class="text-[10px] text-gray-400 uppercase tracking-wide mt-0.5">estimated</p>
+                  </div>
+                </div>
+
+                <!-- Surface breakdown list -->
+                <div id="surfaces-list" class="hidden mt-3 space-y-1.5"></div>
+              </div>
+
+              <div class="border-t-2 border-dashed border-gray-200"></div>
+
+              <!-- Total -->
+              <div class="flex items-end justify-between">
+                <div>
+                  <p class="text-xs text-gray-400 uppercase tracking-wide font-bold">Estimated Total</p>
+                  <p class="text-[10px] text-gray-400 mt-0.5">Minimum job: $200</p>
+                </div>
+                <p id="total-price" class="font-heading text-3xl text-brand-dark leading-none">--</p>
+              </div>
+
+              <button id="btn-book" class="w-full bg-gradient-to-r from-water-500 to-water-600 hover:from-water-600 hover:to-water-700 text-white font-heading uppercase tracking-wider text-sm py-4 rounded-xl transition shadow-md hover:shadow-lg disabled:opacity-40 disabled:cursor-not-allowed" disabled>
+                Book This Price
+              </button>
+
+              <p class="text-center text-[10px] text-gray-400">
+                Or call us now: <a href="tel:7046516329" class="text-water-500 font-bold">(704) 651-6329</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ BOOKING MODAL ════════════ -->
+  <div id="modal-book" class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" id="modal-overlay"></div>
+    <div class="relative bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-fade-up">
+      <div class="bg-gradient-to-r from-brand-dark to-brand-soft px-6 py-5">
+        <h2 class="font-heading text-white text-xl uppercase tracking-wide">Lock In Your Quote</h2>
+        <p class="text-water-300 text-xs mt-1">We'll confirm your exact price within 24 hours.</p>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="bg-water-50 border border-water-200 rounded-xl p-4 text-center">
+          <p class="text-xs text-water-600 uppercase tracking-wide font-bold">Your Estimated Total</p>
+          <p id="modal-total" class="font-heading text-3xl text-brand-dark mt-1">$0</p>
+        </div>
+        <div>
+          <label class="block text-xs text-gray-500 uppercase tracking-wide font-bold mb-1">Your Name</label>
+          <input id="book-name" type="text" placeholder="John Smith" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-water-500 focus:ring-2 focus:ring-water-500/20 transition" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-500 uppercase tracking-wide font-bold mb-1">Phone Number</label>
+          <input id="book-phone" type="tel" placeholder="(704) 555-1234" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-water-500 focus:ring-2 focus:ring-water-500/20 transition" />
+        </div>
+        <div>
+          <label class="block text-xs text-gray-500 uppercase tracking-wide font-bold mb-1">Email</label>
+          <input id="book-email" type="email" placeholder="john@example.com" class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm outline-none focus:border-water-500 focus:ring-2 focus:ring-water-500/20 transition" />
+        </div>
+        <div class="flex gap-3">
+          <button id="btn-modal-cancel" class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-600 font-heading uppercase tracking-wide text-sm py-3 rounded-xl transition">Cancel</button>
+          <button id="btn-modal-submit" class="flex-1 bg-water-500 hover:bg-water-600 text-white font-heading uppercase tracking-wide text-sm py-3 rounded-xl transition shadow-md">Send Quote Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════ SUCCESS TOAST ════════════ -->
+  <div id="toast-success" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 z-[200] bg-green-600 text-white px-6 py-3 rounded-xl shadow-2xl flex items-center gap-3 animate-fade-up">
+    <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+    <span class="text-sm font-bold">Quote request sent! We'll be in touch soon.</span>
+  </div>
+
+  <!-- ════════════ SCRIPTS ════════════ -->
+  <script>
+    // ──────────── CONFIGURATION ────────────
+    const GOOGLE_API_KEY = 'AIzaSyDz8UmBy6YZ9LfwHa5Dgg1YqomRJ75dHn0';
+    const PRICE_PER_SQFT_HOUSE = 0.18;
+    const PRICE_PER_SQFT_CONCRETE = 0.25;
+    const MINIMUM_JOB_PRICE = 200;
+    const SQ_METERS_TO_FEET = 10.764;
+
+    // Surface type config: color, default size in meters (width x height)
+    // Realistic defaults: Driveway ~565 sqft, Patio ~172 sqft, Sidewalk ~155 sqft, Pool Deck ~645 sqft
+    const SURFACE_CONFIG = {
+      driveway:  { label: 'Driveway',    color: '#3B82F6', defaultW: 3.5, defaultH: 15 },
+      patio:     { label: 'Patio',       color: '#10B981', defaultW: 4,   defaultH: 4 },
+      sidewalk:  { label: 'Sidewalk',    color: '#F59E0B', defaultW: 1.2, defaultH: 12 },
+      pool_deck: { label: 'Pool Deck',   color: '#06B6D4', defaultW: 10,  defaultH: 6 },
+      custom:    { label: 'Custom Area', color: '#8B5CF6', defaultW: 5,   defaultH: 5 },
+    };
+
+    // ──────────── STATE ────────────
+    let map = null;
+    let drawingManager = null;
+    let surfaces = [];  // { id, type, polygon, sqft }
+    let surfaceIdCounter = 0;
+    let selectedPlace = null;
+    let centerLat = 0, centerLng = 0;
+    let houseSqft = 0;
+    let housePrice = 0;
+    let totalConcreteSqft = 0;
+    let concretePrice = 0;
+    let includeHouse = true;
+    let includeConcrete = true;
+    let highlightedSurfaceId = null;
+
+    // ──────────── DOM REFS ────────────
+    const $ = (id) => document.getElementById(id);
+    const screenAddress = $('screen-address');
+    const screenQuote = $('screen-quote');
+    const addressInput = $('address-input');
+    const btnGo = $('btn-go');
+    const btnBack = $('btn-back');
+    const btnDraw = $('btn-draw');
+    const btnClearAll = $('btn-clear-all');
+    const drawHint = $('draw-hint');
+    const surfaceHint = $('surface-hint');
+    const displayAddress = $('display-address');
+    const housePriceEl = $('house-price');
+    const houseSqftLabel = $('house-sqft-label');
+    const houseLoading = $('house-loading');
+    const houseManual = $('house-manual');
+    const toggleHouseBtn = $('toggle-house');
+    const cardHouse = $('card-house');
+    const concretePriceEl = $('concrete-price');
+    const concreteSqftLabel = $('concrete-sqft-label');
+    const concreteIconWrap = $('concrete-icon-wrap');
+    const toggleConcreteBtn = $('toggle-concrete');
+    const surfacesList = $('surfaces-list');
+    const totalPriceEl = $('total-price');
+    const btnBook = $('btn-book');
+    const modalBook = $('modal-book');
+    const modalTotal = $('modal-total');
+
+    // ──────────── GOOGLE MAPS LOADER ────────────
+    function loadGoogleMaps() {
+      return new Promise((resolve, reject) => {
+        if (window.google && window.google.maps) { resolve(); return; }
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${GOOGLE_API_KEY}&libraries=places,drawing,geometry&callback=__gmapsReady`;
+        script.async = true;
+        script.defer = true;
+        window.__gmapsReady = () => resolve();
+        script.onerror = () => reject(new Error('Failed to load Google Maps'));
+        document.head.appendChild(script);
+      });
+    }
+
+    // ──────────── INIT ────────────
+    async function init() {
+      await loadGoogleMaps();
+
+      const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+        types: ['address'],
+        componentRestrictions: { country: 'us' },
+      });
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (place && place.geometry) {
+          selectedPlace = place;
+          btnGo.disabled = false;
+        }
+      });
+
+      addressInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && selectedPlace) { e.preventDefault(); startQuote(); }
+      });
+
+      btnGo.addEventListener('click', startQuote);
+      btnBack.addEventListener('click', goBack);
+      btnDraw.addEventListener('click', startDrawMode);
+      btnClearAll.addEventListener('click', clearAll);
+      $('btn-manual-calc').addEventListener('click', manualCalc);
+      $('manual-sqft').addEventListener('keydown', (e) => { if (e.key === 'Enter') manualCalc(); });
+      toggleHouseBtn.addEventListener('click', () => setServiceIncluded('house', !includeHouse));
+      toggleConcreteBtn.addEventListener('click', () => setServiceIncluded('concrete', !includeConcrete));
+      btnBook.addEventListener('click', openBookModal);
+      $('modal-overlay').addEventListener('click', closeBookModal);
+      $('btn-modal-cancel').addEventListener('click', closeBookModal);
+      $('btn-modal-submit').addEventListener('click', submitBooking);
+    }
+
+    // ──────────── FLOW: START QUOTE ────────────
+    function startQuote() {
+      if (!selectedPlace) return;
+
+      houseSqft = 0; housePrice = 0;
+      totalConcreteSqft = 0; concretePrice = 0;
+      includeHouse = true; includeConcrete = true;
+      surfaces = []; surfaceIdCounter = 0;
+      highlightedSurfaceId = null;
+
+      screenAddress.classList.add('hidden');
+      screenQuote.classList.remove('hidden');
+      displayAddress.textContent = selectedPlace.formatted_address || addressInput.value;
+
+      // Reset UI
+      housePriceEl.textContent = '--';
+      houseSqftLabel.textContent = 'Calculating...';
+      houseLoading.classList.remove('hidden');
+      houseManual.classList.add('hidden');
+      concretePriceEl.textContent = '--';
+      concretePriceEl.classList.add('text-gray-300');
+      concretePriceEl.classList.remove('text-brand-dark');
+      concreteSqftLabel.textContent = 'Add surfaces on the map above';
+      concreteIconWrap.classList.remove('bg-water-100', 'text-water-600');
+      concreteIconWrap.classList.add('bg-gray-100', 'text-gray-500');
+      totalPriceEl.textContent = '--';
+      btnBook.disabled = true;
+      btnClearAll.classList.add('hidden');
+      surfacesList.classList.add('hidden');
+      surfacesList.innerHTML = '';
+      surfaceHint.classList.remove('hidden');
+      updateHintText('initial');
+      setServiceIncluded('house', true, true);
+      setServiceIncluded('concrete', true, true);
+
+      const loc = selectedPlace.geometry.location;
+      centerLat = loc.lat();
+      centerLng = loc.lng();
+      initMap(centerLat, centerLng);
+      fetchSolarData(centerLat, centerLng);
+    }
+
+    // ──────────── GUIDED HINT TEXT ────────────
+    function updateHintText(state) {
+      const icon = surfaceHint.querySelector('svg');
+      const span = surfaceHint.querySelector('span');
+      if (state === 'initial') {
+        span.innerHTML = '<strong>Mark your concrete surfaces</strong> &mdash; tap Driveway, Patio, or Sidewalk to drop a shape, then drag it into place.';
+      } else if (state === 'has-surfaces') {
+        span.innerHTML = 'Drag corners to resize. Add more surfaces or click <strong>Book This Price</strong> when done.';
+      }
+    }
+
+    // ──────────── TOGGLE SERVICES ────────────
+    function setToggleVisual(btn, included) {
+      if (included) {
+        btn.textContent = 'Included';
+        btn.classList.remove('bg-gray-100', 'text-gray-500', 'border-gray-300');
+        btn.classList.add('bg-water-100', 'text-water-700', 'border-water-300', 'hover:bg-water-200');
+      } else {
+        btn.textContent = 'Excluded';
+        btn.classList.remove('bg-water-100', 'text-water-700', 'border-water-300', 'hover:bg-water-200');
+        btn.classList.add('bg-gray-100', 'text-gray-500', 'border-gray-300');
+      }
+    }
+
+    function setServiceIncluded(service, included, force = false) {
+      if (service === 'house') {
+        includeHouse = included;
+        setToggleVisual(toggleHouseBtn, includeHouse);
+        housePriceEl.classList.toggle('text-gray-300', !includeHouse);
+        housePriceEl.classList.toggle('text-brand-dark', includeHouse);
+        cardHouse.classList.toggle('opacity-60', !includeHouse);
+        if (!includeHouse) {
+          houseManual.classList.add('hidden');
+          houseLoading.classList.add('hidden');
+          houseSqftLabel.textContent = houseSqft > 0 ? `${houseSqft.toLocaleString()} sq ft (excluded)` : 'Excluded';
+        } else if (!force) {
+          houseSqftLabel.textContent = houseSqft > 0 ? `~${houseSqft.toLocaleString()} sq ft (approx. footprint)` : 'Calculating...';
+          if (houseSqft === 0) houseLoading.classList.remove('hidden');
+        }
+      }
+
+      if (service === 'concrete') {
+        includeConcrete = included;
+        setToggleVisual(toggleConcreteBtn, includeConcrete);
+        concretePriceEl.classList.toggle('text-gray-300', !includeConcrete);
+        concretePriceEl.classList.toggle('text-brand-dark', includeConcrete && totalConcreteSqft > 0);
+        surfaces.forEach(s => {
+          s.polygon.setVisible(includeConcrete);
+        });
+      }
+
+      updateTotal();
+    }
+
+    function goBack() {
+      screenQuote.classList.add('hidden');
+      screenAddress.classList.remove('hidden');
+      surfaces.forEach(s => s.polygon.setMap(null));
+      surfaces = [];
+      if (drawingManager) { drawingManager.setMap(null); drawingManager = null; }
+      map = null;
+    }
+
+    // ──────────── MAP ────────────
+    function initMap(lat, lng) {
+      const loadingEl = $('map-loading');
+      loadingEl.classList.remove('hidden');
+
+      map = new google.maps.Map($('map'), {
+        center: { lat, lng },
+        zoom: 20,
+        mapTypeId: 'hybrid',
+        tilt: 0,
+        disableDefaultUI: true,
+        zoomControl: true,
+        fullscreenControl: true,
+      });
+
+      new google.maps.Marker({
+        position: { lat, lng },
+        map: map,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 8,
+          fillColor: '#0ea5e9',
+          fillOpacity: 1,
+          strokeColor: '#fff',
+          strokeWeight: 3,
+        },
+      });
+
+      google.maps.event.addListenerOnce(map, 'tilesloaded', () => {
+        loadingEl.classList.add('hidden');
+      });
+      setTimeout(() => loadingEl.classList.add('hidden'), 4000);
+
+      initDrawingManager();
+    }
+
+    // ──────────── DRAWING MANAGER (for custom freehand) ────────────
+    function initDrawingManager() {
+      drawingManager = new google.maps.drawing.DrawingManager({
+        drawingMode: null,
+        drawingControl: false,
+        polygonOptions: {
+          fillColor: SURFACE_CONFIG.custom.color,
+          fillOpacity: 0.35,
+          strokeWeight: 2,
+          strokeColor: '#ffffff',
+          strokeOpacity: 0.9,
+          editable: true,
+          draggable: true,
+          zIndex: 1,
+        },
+      });
+      drawingManager.setMap(map);
+
+      google.maps.event.addListener(drawingManager, 'overlaycomplete', (event) => {
+        if (event.type === 'polygon') {
+          drawingManager.setDrawingMode(null);
+          drawHint.classList.add('hidden');
+          map.getDiv().classList.remove('drawing-active');
+          btnDraw.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg> Custom Shape';
+          btnDraw.classList.remove('bg-red-500', 'hover:bg-red-600');
+          btnDraw.classList.add('bg-gray-600', 'hover:bg-gray-700');
+
+          // Apply proper styling to drawn polygon
+          const config = SURFACE_CONFIG.custom;
+          event.overlay.setOptions({
+            fillColor: config.color,
+            fillOpacity: 0.35,
+            strokeColor: '#ffffff',
+            strokeWeight: 3,
+            strokeOpacity: 1,
+          });
+
+          registerSurface('custom', event.overlay);
+        }
+      });
+    }
+
+    function startDrawMode() {
+      if (!drawingManager) return;
+      drawHint.classList.remove('hidden');
+      surfaceHint.classList.add('hidden');
+      map.getDiv().classList.add('drawing-active');
+      btnDraw.innerHTML = 'Cancel Drawing';
+      btnDraw.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+      btnDraw.classList.add('bg-red-500', 'hover:bg-red-600');
+
+      drawingManager.setDrawingMode(google.maps.drawing.OverlayType.POLYGON);
+
+      const cancelHandler = () => {
+        drawingManager.setDrawingMode(null);
+        drawHint.classList.add('hidden');
+        map.getDiv().classList.remove('drawing-active');
+        btnDraw.innerHTML = '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/></svg> Custom Shape';
+        btnDraw.classList.remove('bg-red-500', 'hover:bg-red-600');
+        btnDraw.classList.add('bg-gray-600', 'hover:bg-gray-700');
+        btnDraw.removeEventListener('click', cancelHandler);
+        btnDraw.addEventListener('click', startDrawMode);
+      };
+      btnDraw.removeEventListener('click', startDrawMode);
+      btnDraw.addEventListener('click', cancelHandler);
+    }
+
+    // ──────────── QUICK-ADD SURFACE ────────────
+    // Drops a pre-sized editable/draggable rectangle near the house
+    function addQuickSurface(type) {
+      surfaceHint.classList.add('hidden');
+      const config = SURFACE_CONFIG[type];
+      const metersPerDegLat = 111320;
+      const metersPerDegLng = 111320 * Math.cos(centerLat * Math.PI / 180);
+
+      // Intelligent placement relative to house marker
+      // Driveway: south (toward street), Patio: north/behind, Sidewalk: between driveway & house, Pool Deck: behind & offset
+      const offsets = {
+        driveway:  { dlat: -0.00012, dlng: 0.00003 },   // south of house
+        patio:     { dlat: 0.00007,  dlng: -0.00003 },   // behind/north of house
+        sidewalk:  { dlat: -0.00006, dlng: -0.00004 },   // between house and driveway
+        pool_deck: { dlat: 0.00008,  dlng: 0.00008 },    // behind house, offset from patio
+      };
+      // Stack additional shapes of same type with visible offset
+      const existingOfType = surfaces.filter(s => s.type === type).length;
+      const stackOffset = existingOfType * 0.00006;
+
+      const off = offsets[type] || { dlat: 0, dlng: 0 };
+      const cLat = centerLat + off.dlat + stackOffset;
+      const cLng = centerLng + off.dlng + stackOffset;
+
+      const halfW = (config.defaultW / 2) / metersPerDegLng;
+      const halfH = (config.defaultH / 2) / metersPerDegLat;
+
+      const path = [
+        { lat: cLat + halfH, lng: cLng - halfW },
+        { lat: cLat + halfH, lng: cLng + halfW },
+        { lat: cLat - halfH, lng: cLng + halfW },
+        { lat: cLat - halfH, lng: cLng - halfW },
+      ];
+
+      const polygon = new google.maps.Polygon({
+        paths: path,
+        fillColor: config.color,
+        fillOpacity: 0.35,
+        strokeColor: '#ffffff',
+        strokeWeight: 3,
+        strokeOpacity: 1,
+        editable: true,
+        draggable: true,
+        zIndex: 1,
+        map: map,
+      });
+
+      registerSurface(type, polygon);
+    }
+
+    // ──────────── HIGHLIGHT SURFACE ────────────
+    function highlightSurface(id) {
+      // Unhighlight previous
+      if (highlightedSurfaceId !== null) {
+        const prev = surfaces.find(s => s.id === highlightedSurfaceId);
+        if (prev) {
+          prev.polygon.setOptions({ fillOpacity: 0.35, strokeWeight: 3 });
+        }
+      }
+      // Highlight new
+      highlightedSurfaceId = id;
+      if (id !== null) {
+        const surface = surfaces.find(s => s.id === id);
+        if (surface) {
+          surface.polygon.setOptions({ fillOpacity: 0.55, strokeWeight: 5 });
+        }
+      }
+      // Update list row highlights
+      const rows = surfacesList.querySelectorAll('.surface-row');
+      rows.forEach(row => {
+        const rowId = parseInt(row.dataset.surfaceId);
+        row.classList.toggle('highlighted', rowId === id);
+      });
+    }
+
+    // ──────────── REGISTER A SURFACE ────────────
+    function registerSurface(type, polygon) {
+      const id = ++surfaceIdCounter;
+      const config = SURFACE_CONFIG[type];
+      const sqft = calcPolygonSqft(polygon);
+
+      const surface = { id, type, polygon, sqft, label: config.label };
+      surfaces.push(surface);
+
+      // Listen for edits
+      const path = polygon.getPath();
+      const recalc = () => {
+        surface.sqft = calcPolygonSqft(polygon);
+        recalcAllConcrete();
+      };
+      google.maps.event.addListener(path, 'set_at', recalc);
+      google.maps.event.addListener(path, 'insert_at', recalc);
+      google.maps.event.addListener(polygon, 'dragend', recalc);
+
+      // Right-click to delete
+      google.maps.event.addListener(polygon, 'rightclick', () => {
+        removeSurface(id);
+      });
+
+      // Click to highlight
+      google.maps.event.addListener(polygon, 'click', () => {
+        highlightSurface(highlightedSurfaceId === id ? null : id);
+      });
+
+      recalcAllConcrete();
+      btnClearAll.classList.remove('hidden');
+
+      // Update hint after first surface added
+      updateHintText('has-surfaces');
+      surfaceHint.classList.remove('hidden');
+    }
+
+    function removeSurface(id) {
+      const idx = surfaces.findIndex(s => s.id === id);
+      if (idx === -1) return;
+      surfaces[idx].polygon.setMap(null);
+      surfaces.splice(idx, 1);
+      if (highlightedSurfaceId === id) highlightedSurfaceId = null;
+      recalcAllConcrete();
+      if (surfaces.length === 0) {
+        btnClearAll.classList.add('hidden');
+        updateHintText('initial');
+        surfaceHint.classList.remove('hidden');
+      }
+    }
+
+    function clearAll() {
+      surfaces.forEach(s => s.polygon.setMap(null));
+      surfaces = [];
+      highlightedSurfaceId = null;
+      recalcAllConcrete();
+      btnClearAll.classList.add('hidden');
+      updateHintText('initial');
+      surfaceHint.classList.remove('hidden');
+    }
+
+    function calcPolygonSqft(polygon) {
+      const areaM2 = google.maps.geometry.spherical.computeArea(polygon.getPath());
+      return Math.round(areaM2 * SQ_METERS_TO_FEET);
+    }
+
+    // ──────────── RECALCULATE ALL CONCRETE ────────────
+    function recalcAllConcrete() {
+      totalConcreteSqft = 0;
+      surfaces.forEach(s => {
+        s.sqft = calcPolygonSqft(s.polygon);
+        totalConcreteSqft += s.sqft;
+      });
+      concretePrice = totalConcreteSqft * PRICE_PER_SQFT_CONCRETE;
+
+      // Update breakdown list
+      surfacesList.innerHTML = '';
+      if (surfaces.length > 0) {
+        surfacesList.classList.remove('hidden');
+        surfaces.forEach(s => {
+          const config = SURFACE_CONFIG[s.type];
+          const row = document.createElement('div');
+          row.className = 'surface-row flex items-center justify-between text-xs';
+          row.dataset.surfaceId = s.id;
+          const isHighlighted = s.id === highlightedSurfaceId;
+          if (isHighlighted) row.classList.add('highlighted');
+          row.innerHTML = `
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-sm flex-shrink-0" style="background:${config.color}"></span>
+              <span class="text-gray-600">${config.label}</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="text-gray-500">${s.sqft.toLocaleString()} sq ft</span>
+              <button onclick="event.stopPropagation(); removeSurface(${s.id})" class="text-red-400 hover:text-red-600 transition" title="Remove">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+          `;
+          // Hover/click on row highlights corresponding polygon
+          row.addEventListener('mouseenter', () => highlightSurface(s.id));
+          row.addEventListener('mouseleave', () => highlightSurface(null));
+          row.addEventListener('click', () => highlightSurface(highlightedSurfaceId === s.id ? null : s.id));
+          surfacesList.appendChild(row);
+        });
+      } else {
+        surfacesList.classList.add('hidden');
+      }
+
+      // Update price card
+      if (totalConcreteSqft > 0) {
+        concretePriceEl.textContent = '$' + Math.round(concretePrice).toLocaleString();
+        concretePriceEl.classList.remove('text-gray-300');
+        concretePriceEl.classList.add('text-brand-dark');
+        concreteSqftLabel.textContent = totalConcreteSqft.toLocaleString() + ' sq ft total concrete';
+        concreteIconWrap.classList.add('bg-water-100', 'text-water-600');
+        concreteIconWrap.classList.remove('bg-gray-100', 'text-gray-500');
+        concretePriceEl.classList.add('price-update');
+        setTimeout(() => concretePriceEl.classList.remove('price-update'), 400);
+      } else {
+        concretePriceEl.textContent = '--';
+        concretePriceEl.classList.add('text-gray-300');
+        concretePriceEl.classList.remove('text-brand-dark');
+        concreteSqftLabel.textContent = 'Add surfaces on the map above';
+        concreteIconWrap.classList.remove('bg-water-100', 'text-water-600');
+        concreteIconWrap.classList.add('bg-gray-100', 'text-gray-500');
+      }
+
+      updateTotal();
+    }
+
+    // ──────────── SOLAR API ────────────
+    async function fetchSolarData(lat, lng) {
+      try {
+        const url = `https://solar.googleapis.com/v1/buildingInsights:findClosest?location.latitude=${lat}&location.longitude=${lng}&requiredQuality=HIGH&key=${GOOGLE_API_KEY}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`Solar API returned ${res.status}`);
+        const data = await res.json();
+        const roofM2 = data?.solarPotential?.wholeRoofStats?.areaMeters2;
+        if (!roofM2) throw new Error('No roof data');
+
+        houseSqft = Math.round(roofM2 * SQ_METERS_TO_FEET);
+        housePrice = houseSqft * PRICE_PER_SQFT_HOUSE;
+
+        houseLoading.classList.add('hidden');
+        houseSqftLabel.textContent = `~${houseSqft.toLocaleString()} sq ft (approx. footprint)`;
+        housePriceEl.textContent = '$' + Math.round(housePrice).toLocaleString();
+        housePriceEl.classList.add('price-update');
+        setTimeout(() => housePriceEl.classList.remove('price-update'), 400);
+        updateTotal();
+      } catch (err) {
+        console.warn('Solar API error:', err);
+        houseLoading.classList.add('hidden');
+        houseSqftLabel.textContent = '';
+        houseManual.classList.remove('hidden');
+      }
+    }
+
+    function manualCalc() {
+      const val = parseInt($('manual-sqft').value);
+      if (!val || val < 100) { $('manual-sqft').classList.add('border-red-400'); return; }
+      $('manual-sqft').classList.remove('border-red-400');
+      houseSqft = val;
+      housePrice = val * PRICE_PER_SQFT_HOUSE;
+      houseManual.classList.add('hidden');
+      houseSqftLabel.textContent = `${val.toLocaleString()} sq ft (entered manually)`;
+      housePriceEl.textContent = '$' + Math.round(housePrice).toLocaleString();
+      housePriceEl.classList.add('price-update');
+      setTimeout(() => housePriceEl.classList.remove('price-update'), 400);
+      updateTotal();
+    }
+
+    // ──────────── TOTAL CALCULATION ────────────
+    function updateTotal() {
+      const h = includeHouse ? housePrice : 0;
+      const c = includeConcrete ? concretePrice : 0;
+      let total = h + c;
+      if (total > 0 && total < MINIMUM_JOB_PRICE) total = MINIMUM_JOB_PRICE;
+
+      if (total > 0) {
+        totalPriceEl.textContent = '$' + Math.round(total).toLocaleString();
+        totalPriceEl.classList.add('price-update');
+        setTimeout(() => totalPriceEl.classList.remove('price-update'), 400);
+        btnBook.disabled = false;
+      } else {
+        totalPriceEl.textContent = '--';
+        btnBook.disabled = true;
+      }
+    }
+
+    // ──────────── BOOKING MODAL ────────────
+    function openBookModal() {
+      let total = Math.max((includeHouse ? housePrice : 0) + (includeConcrete ? concretePrice : 0), MINIMUM_JOB_PRICE);
+      modalTotal.textContent = '$' + Math.round(total).toLocaleString();
+      modalBook.classList.remove('hidden');
+    }
+
+    function closeBookModal() { modalBook.classList.add('hidden'); }
+
+    function submitBooking() {
+      const name = $('book-name').value.trim();
+      const phone = $('book-phone').value.trim();
+      const email = $('book-email').value.trim();
+
+      if (!name || !phone) {
+        if (!name) $('book-name').classList.add('border-red-400');
+        if (!phone) $('book-phone').classList.add('border-red-400');
+        return;
+      }
+      $('book-name').classList.remove('border-red-400');
+      $('book-phone').classList.remove('border-red-400');
+
+      let total = Math.max(Math.round((includeHouse ? housePrice : 0) + (includeConcrete ? concretePrice : 0)), MINIMUM_JOB_PRICE);
+      const address = displayAddress.textContent;
+      const houseLine = includeHouse
+        ? `House Wash (Siding): $${Math.round(housePrice)} (${houseSqft.toLocaleString()} sq ft)\n`
+        : 'House Wash (Siding): Excluded\n';
+
+      let concreteLine = '';
+      if (includeConcrete && surfaces.length > 0) {
+        concreteLine = `Concrete/Flatwork: $${Math.round(concretePrice)} (${totalConcreteSqft.toLocaleString()} sq ft)\n`;
+        surfaces.forEach(s => {
+          concreteLine += `  - ${SURFACE_CONFIG[s.type].label}: ${s.sqft.toLocaleString()} sq ft\n`;
+        });
+      } else {
+        concreteLine = 'Concrete/Flatwork: Excluded\n';
+      }
+
+      const subject = encodeURIComponent(`Instant Quote Request - $${total}`);
+      const body = encodeURIComponent(
+        `New Quote Request from Website\n` +
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n` +
+        `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nAddress: ${address}\n\n` +
+        houseLine + concreteLine +
+        `━━━━━━━━━━━━━━━━━━━━━━━━━━\n` +
+        `ESTIMATED TOTAL: $${total}\n\n` +
+        `Sent from 704 Pressure Washing Instant Quote Tool`
+      );
+
+      window.location.href = `mailto:704pressurewashingservices@gmail.com?subject=${subject}&body=${body}`;
+      closeBookModal();
+
+      const toast = $('toast-success');
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 5000);
+    }
+
+    // ──────────── BOOT ────────────
+    init().catch((err) => {
+      console.error('Init failed:', err);
+      addressInput.placeholder = 'Error loading maps. Please refresh.';
+      addressInput.disabled = true;
+    });
+  </script>
+</body>
+</html>

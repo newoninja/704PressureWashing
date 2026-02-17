@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import PageHeader from '../components/PageHeader'
 import { localBusinessSchema } from '../data/seo'
 
@@ -12,7 +13,7 @@ export default function NotFoundPage() {
       />
       <section className="section section-light">
         <div className="container">
-          <a href="/" className="btn btn-primary">Back to Home</a>
+          <Link to="/" className="btn btn-primary">Back to Home</Link>
         </div>
       </section>
     </>

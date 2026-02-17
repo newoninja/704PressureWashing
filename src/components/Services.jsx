@@ -1,5 +1,8 @@
+import { Link } from 'react-router-dom'
 import useReveal from '../useReveal'
-import { services } from '../data/siteData'
+import useAsyncData from '../hooks/useAsyncData'
+import { getServices } from '../data/contentApi'
+import { decorateServices } from '../data/serviceIcons'
 
 function ServiceCard({ service }) {
   const Icon = service.icon
@@ -12,13 +15,15 @@ function ServiceCard({ service }) {
       <h3>{service.title}</h3>
       <p className="service-best-for">{service.bestFor}</p>
       <p>{service.short}</p>
-      <a href={`/${service.slug}`}>Learn More</a>
+      <Link to={`/${service.slug}`}>Learn More</Link>
     </article>
   )
 }
 
 export default function Services() {
   const sectionRef = useReveal()
+  const { data: rawServices } = useAsyncData(getServices, [])
+  const services = decorateServices(rawServices)
 
   return (
     <section id="services" className="section section-muted" ref={sectionRef}>

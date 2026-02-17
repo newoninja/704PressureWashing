@@ -415,6 +415,10 @@ p {
   margin-bottom: 1rem;
 }
 
+.hero-call-inline {
+  display: none;
+}
+
 .hero-proof-stack {
   max-width: 820px;
   display: grid;
@@ -1788,12 +1792,25 @@ a:focus-visible {
     color: #dce7fb;
     border-color: rgba(198, 214, 241, 0.55);
     background: rgba(255, 255, 255, 0.02);
+    display: none;
+  }
+
+  .hero-call-inline {
+    display: inline-flex;
+    align-items: center;
+    margin-top: -0.1rem;
+    margin-bottom: 0.2rem;
+    color: #bcd2f6;
+    font-size: 0.9rem;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   .hero-how {
     font-size: 0.89rem;
     line-height: 1.44;
     color: #c5d4ee;
+    display: none;
   }
 
   .services-grid,
@@ -1889,11 +1906,7 @@ a:focus-visible {
   }
 
   .hero-google-badge {
-    grid-template-columns: 1fr auto;
-    max-width: 100%;
-    gap: 0.35rem 0.55rem;
-    padding: 0.62rem 0.7rem;
-    border-radius: 16px;
+    display: none;
   }
 
   .hero-google-stars svg {
@@ -1983,8 +1996,7 @@ a:focus-visible {
 
 @media (max-width: 480px) {
   .nav-estimate-btn {
-    font-size: 0.64rem;
-    padding: 0.32rem 0.56rem;
+    display: none;
   }
 
   .map-label {

@@ -1,4 +1,5 @@
 import { useEffect } from 'react'
+import { Route, Routes, useLocation } from 'react-router-dom'
 import AnalyticsLoader from './components/AnalyticsLoader'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
@@ -11,57 +12,24 @@ import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
 import WorkPage from './pages/WorkPage'
 import BlogPage from './pages/BlogPage'
-import BlogPostPage from './pages/blog/BlogPostPage'
-import ServiceDetailPage from './pages/ServiceDetailPage'
+import ServiceRoutePage from './pages/ServiceRoutePage'
 import PrivacyPage from './pages/PrivacyPage'
 import TermsPage from './pages/TermsPage'
 import QuotePage from './pages/QuotePage'
-import { locationPosts, services } from './data/siteData'
+import TestQuotePage from './pages/TestQuotePage'
+import BlogPostRoutePage from './pages/blog/BlogPostRoutePage'
 import { trackPageView } from './utils/analytics'
 
-const staticRoutes = {
-  '/': HomePage,
-  '/our-story': OurStoryPage,
-  '/services': ServicesPage,
-  '/our-work': WorkPage,
-  '/areas-served': AreasPage,
-  '/blog': BlogPage,
-  '/faqs': FaqPage,
-  '/contact': ContactPage,
-  '/privacy-policy': PrivacyPage,
-  '/terms': TermsPage,
-  '/quote': QuotePage,
-}
-
-function resolvePage(pathname) {
-  const cleanedPath = pathname.replace(/\/$/, '') || '/'
-
-  if (staticRoutes[cleanedPath]) {
-    const Page = staticRoutes[cleanedPath]
-    return <Page />
-  }
-
-  const service = services.find((item) => cleanedPath === `/${item.slug}`)
-  if (service) {
-    return <ServiceDetailPage service={service} canonicalPath={`/${service.slug}`} />
-  }
-
-  const post = locationPosts.find((item) => cleanedPath === `/blog/${item.slug}`)
-  if (post) {
-    return <BlogPostPage post={post} />
-  }
-
-  return <NotFoundPage />
-}
-
 export default function App() {
-  const pathname = window.location.pathname.replace(/\/$/, '') || '/'
-  const isQuotePage = pathname === '/quote'
+  const location = useLocation()
+  const pathname = location.pathname.replace(/\/$/, '') || '/'
+  const isQuotePage = pathname === '/quote' || pathname === '/test'
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       trackPageView(pathname, document.title)
     }, 0)
+
     return () => window.clearTimeout(timer)
   }, [pathname])
 
@@ -69,7 +37,25 @@ export default function App() {
     <div className="app-shell">
       <AnalyticsLoader />
       {!isQuotePage && <Nav />}
-      <main className="site-main">{resolvePage(pathname)}</main>
+      <main className="site-main">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/our-story" element={<OurStoryPage />} />
+          <Route path="/services" element={<ServicesPage />} />
+          <Route path="/our-work" element={<WorkPage />} />
+          <Route path="/areas-served" element={<AreasPage />} />
+          <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostRoutePage />} />
+          <Route path="/faqs" element={<FaqPage />} />
+          <Route path="/contact" element={<ContactPage />} />
+          <Route path="/privacy-policy" element={<PrivacyPage />} />
+          <Route path="/terms" element={<TermsPage />} />
+          <Route path="/quote" element={<QuotePage />} />
+          <Route path="/test" element={<TestQuotePage />} />
+          <Route path="/:serviceSlug" element={<ServiceRoutePage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </main>
       {!isQuotePage && <Footer />}
     </div>
   )

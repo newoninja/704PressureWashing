@@ -1,7 +1,8 @@
+import { Link } from 'react-router-dom'
 import PageHeader from '../../components/PageHeader'
 import { localBusinessSchema } from '../../data/seo'
 import { ArrowRight, CheckCircle2, MapPin, Phone } from 'lucide-react'
-import { business } from '../../data/siteData'
+import { business } from '../../data/business'
 
 export default function BlogPostPage({ post }) {
   return (
@@ -37,10 +38,10 @@ export default function BlogPostPage({ post }) {
                 Need help with {post.focus.toLowerCase()} in {post.city}? We provide free estimates and
                 straightforward scheduling.
               </p>
-              <a href="/quote" className="btn btn-primary">
+              <Link to="/quote" className="btn btn-primary">
                 Request a Free Estimate
                 <ArrowRight size={16} />
-              </a>
+              </Link>
             </div>
           </article>
 
@@ -59,9 +60,9 @@ export default function BlogPostPage({ post }) {
             <div className="blog-sidebar-card blog-sidebar-card-cta">
               <h3>Ready to book exterior cleaning?</h3>
               <p>Get a fast quote and choose a time that works for your schedule.</p>
-              <a href="/quote" className="btn btn-primary">
+              <Link to="/quote" className="btn btn-primary">
                 Get Free Estimate
-              </a>
+              </Link>
             </div>
           </aside>
         </div>

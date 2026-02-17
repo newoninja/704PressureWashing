@@ -1,6 +1,7 @@
 import PageHeader from '../components/PageHeader'
-import { galleryProjects } from '../data/siteData'
 import { localBusinessSchema } from '../data/seo'
+import { getGalleryProjects } from '../data/contentApi'
+import useAsyncData from '../hooks/useAsyncData'
 
 function ProjectCard({ project }) {
   return (
@@ -25,6 +26,8 @@ function ProjectCard({ project }) {
 }
 
 export default function WorkPage() {
+  const { data: galleryProjects } = useAsyncData(getGalleryProjects, [])
+
   return (
     <>
       <PageHeader

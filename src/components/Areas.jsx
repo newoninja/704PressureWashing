@@ -1,9 +1,12 @@
 import { Facebook, Instagram, MapPin } from 'lucide-react'
 import useReveal from '../useReveal'
-import { areas, business } from '../data/siteData'
+import { business } from '../data/business'
+import { getAreas } from '../data/contentApi'
+import useAsyncData from '../hooks/useAsyncData'
 
 export default function Areas() {
   const sectionRef = useReveal()
+  const { data: areas } = useAsyncData(getAreas, [])
   const googleApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
   const mapSrc = googleApiKey
     ? `https://www.google.com/maps/embed/v1/view?key=${googleApiKey}&center=35.2271,-80.8431&zoom=10&maptype=roadmap`

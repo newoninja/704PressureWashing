@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import { CheckCircle2, Clock, MapPin, Phone, Send, ShieldCheck, Star } from 'lucide-react'
 import useReveal from '../useReveal'
-import { business, services } from '../data/siteData'
+import { business } from '../data/business'
 import { trackCallClick, trackFormSubmit } from '../utils/analytics'
 import useGooglePlaceStats from '../hooks/useGooglePlaceStats'
+import useAsyncData from '../hooks/useAsyncData'
+import { getServices } from '../data/contentApi'
 
 export default function Contact() {
   const [status, setStatus] = useState('idle')
   const sectionRef = useReveal()
   const { ratingText, reviewCountText } = useGooglePlaceStats()
+  const { data: services } = useAsyncData(getServices, [])
 
   async function handleSubmit(event) {
     event.preventDefault()

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { business } from '../data/siteData'
+import { business } from '../data/business'
 
 const fallbackStats = {
   rating: Number.parseFloat(business.rating) || 5,

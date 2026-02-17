@@ -1,0 +1,54 @@
+[
+  {
+    "slug": "pressure-washing",
+    "icon": "droplets",
+    "title": "Pressure Washing",
+    "bestFor": "Best for driveways, sidewalks, patios",
+    "short": "Restore hard surfaces like driveways, sidewalks, and patios with a deep exterior clean.",
+    "hero": "Dependable pressure washing that restores curb appeal and removes years of buildup.",
+    "details": [
+      "Surface-specific pressure settings for concrete, pavers, and stone",
+      "Oil, grime, algae, and staining removal for high-traffic areas",
+      "Great for driveways, sidewalks, pool decks, and retaining walls"
+    ]
+  },
+  {
+    "slug": "soft-washing",
+    "icon": "cloud-rain",
+    "title": "Soft Washing",
+    "bestFor": "Best for siding, stucco, painted exteriors",
+    "short": "Low-pressure cleaning designed for delicate surfaces like siding, stucco, and roofing.",
+    "hero": "Protect your home with soft washing designed for delicate materials and long-term results.",
+    "details": [
+      "Low-pressure application with appropriate detergents and dwell time",
+      "Safe for vinyl, painted surfaces, stucco, and roof exteriors",
+      "Targets algae, mildew, and organic growth at the source"
+    ]
+  },
+  {
+    "slug": "window-cleaning",
+    "icon": "sparkles",
+    "title": "Pure Water Window Cleaning",
+    "bestFor": "Best for streak-free exterior glass",
+    "short": "Streak-free, chemical-free window cleaning for residential and commercial properties.",
+    "hero": "Pure water technology delivers clean, clear windows without soap residue or streaking.",
+    "details": [
+      "Deionized water-fed pole cleaning for exterior glass",
+      "Spot-free finish that dries clean without chemicals",
+      "Works for residential and multi-unit commercial exteriors"
+    ]
+  },
+  {
+    "slug": "gutter-brightening",
+    "icon": "paint-bucket",
+    "title": "Gutter Brightening",
+    "bestFor": "Best for oxidation and tiger striping",
+    "short": "Remove oxidation and tiger striping from gutter exteriors to refresh your home facade.",
+    "hero": "Bring back bright, clean gutter exteriors with targeted oxidation and streak treatment.",
+    "details": [
+      "Specialized process for black streaking and oxidation stains",
+      "Improves the visual line of your roof and exterior trim",
+      "Ideal as part of whole-home curb appeal refresh"
+    ]
+  }
+]

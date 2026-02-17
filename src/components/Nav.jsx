@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Clock, Menu, Phone, MapPin, X } from 'lucide-react'
-import { business } from '../data/siteData'
+import { Link, NavLink } from 'react-router-dom'
+import { business } from '../data/business'
 import { trackCallClick } from '../utils/analytics'
 
 const desktopLinks = [
@@ -18,15 +19,8 @@ const mobileLinks = [
   { label: 'FAQs', href: '/faqs' },
 ]
 
-function isLinkActive(pathname, href) {
-  if (href === '/') return pathname === '/'
-  if (href === '/blog') return pathname === '/blog' || pathname.startsWith('/blog/')
-  return pathname === href
-}
-
 export default function Nav() {
   const [open, setOpen] = useState(false)
-  const pathname = window.location.pathname.replace(/\/$/, '') || '/'
 
   return (
     <header className="site-header" id="top">
@@ -51,31 +45,32 @@ export default function Nav() {
 
       <div className="main-nav-wrap">
         <div className="container main-nav">
-          <a href="/" className="brand-lockup" aria-label="704 Pressure Washing Services home">
+          <Link to="/" className="brand-lockup" aria-label="704 Pressure Washing Services home">
             <img src="/logo.png" alt="704 Pressure Washing Services" />
             <div>
               <p>704 Pressure Washing</p>
               <span>Charlotte, NC</span>
             </div>
-          </a>
+          </Link>
 
           <nav className="desktop-nav" aria-label="Main navigation">
             {desktopLinks.map((link) => (
-              <a
+              <NavLink
                 key={link.href}
-                href={link.href}
-                className={isLinkActive(pathname, link.href) ? 'active' : ''}
+                to={link.href}
+                end={link.href === '/'}
+                className={({ isActive }) => (isActive ? 'active' : '')}
               >
                 {link.label}
-              </a>
+              </NavLink>
             ))}
           </nav>
 
           <div className="nav-actions">
-            <a href="/quote" className="btn btn-primary nav-estimate-btn">
+            <Link to="/quote" className="btn btn-primary nav-estimate-btn">
               <span className="nav-estimate-full">Get Free Estimate</span>
               <span className="nav-estimate-short">Estimate</span>
-            </a>
+            </Link>
             <button
               type="button"
               aria-label="Toggle mobile menu"
@@ -91,9 +86,9 @@ export default function Nav() {
           <nav className="mobile-nav" aria-label="Mobile navigation">
             <div className="container">
               {mobileLinks.map((link) => (
-                <a key={`${link.label}-${link.href}`} href={link.href} onClick={() => setOpen(false)}>
+                <Link key={`${link.label}-${link.href}`} to={link.href} onClick={() => setOpen(false)}>
                   {link.label}
-                </a>
+                </Link>
               ))}
               <a
                 href={`tel:${business.phoneHref}`}

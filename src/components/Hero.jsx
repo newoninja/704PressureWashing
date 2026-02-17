@@ -1,5 +1,6 @@
 import { ArrowRight, ShieldCheck, Star, ThumbsUp } from 'lucide-react'
-import { business } from '../data/siteData'
+import { Link } from 'react-router-dom'
+import { business } from '../data/business'
 import { trackCallClick, trackEvent } from '../utils/analytics'
 import useGooglePlaceStats from '../hooks/useGooglePlaceStats'
 
@@ -19,14 +20,17 @@ export default function Hero() {
           </p>
 
           <div className="hero-actions">
-            <a href="/quote" className="btn btn-primary btn-lg" onClick={() => trackEvent('cta_click', { source: 'hero_estimate' })}>
+            <Link to="/quote" className="btn btn-primary btn-lg" onClick={() => trackEvent('cta_click', { source: 'hero_estimate' })}>
               Get Free Estimate
               <ArrowRight size={16} />
-            </a>
+            </Link>
             <a href={`tel:${business.phoneHref}`} className="btn btn-secondary btn-lg" onClick={() => trackCallClick('hero')}>
               Call {business.phoneDisplay}
             </a>
           </div>
+          <a href={`tel:${business.phoneHref}`} className="hero-call-inline" onClick={() => trackCallClick('hero_inline')}>
+            Or call {business.phoneDisplay}
+          </a>
 
           <div className="hero-proof-stack">
             <p className="hero-how">How it works: Request a quote, choose a time, and get a spotless exterior.</p>

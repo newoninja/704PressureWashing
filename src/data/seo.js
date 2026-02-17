@@ -1,4 +1,4 @@
-import { business } from './siteData'
+import { business } from './business'
 
 const baseUrl = 'https://704pressurewashing.com'
 

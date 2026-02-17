@@ -1,4 +1,5 @@
 import { CheckCircle2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import useReveal from '../useReveal'
 
 const highlights = [
@@ -26,9 +27,9 @@ export default function About() {
             Whether you need driveway cleaning, a full soft wash, or streak-free windows, we bring
             the right method for the job and keep you informed from start to finish.
           </p>
-          <a href="/services" className="text-link">
+          <Link to="/services" className="text-link">
             See Our Services
-          </a>
+          </Link>
         </div>
 
         <div className="story-panel reveal reveal-left" style={{ animationDelay: '0.15s' }}>

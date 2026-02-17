@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react'
 import useReveal from '../useReveal'
-import { business } from '../data/siteData'
+import { business } from '../data/business'
 
 const AUTO_PLAY_MS = 4000
 

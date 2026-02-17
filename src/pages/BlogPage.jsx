@@ -1,9 +1,13 @@
-import PageHeader from '../components/PageHeader'
-import { locationPosts } from '../data/siteData'
-import { localBusinessSchema } from '../data/seo'
+import { Link } from 'react-router-dom'
 import { ArrowRight, Clock3, MapPin } from 'lucide-react'
+import PageHeader from '../components/PageHeader'
+import { localBusinessSchema } from '../data/seo'
+import { getLocationPosts } from '../data/contentApi'
+import useAsyncData from '../hooks/useAsyncData'
 
 export default function BlogPage() {
+  const { data: locationPosts } = useAsyncData(getLocationPosts, [])
+
   return (
     <>
       <PageHeader
@@ -16,7 +20,7 @@ export default function BlogPage() {
         <div className="container blog-list">
           {locationPosts.map((post) => (
             <article key={post.slug} className="blog-card">
-              <a href={`/blog/${post.slug}`} className="blog-card-anchor" aria-label={`Open blog post: ${post.title}`}>
+              <Link to={`/blog/${post.slug}`} className="blog-card-anchor" aria-label={`Open blog post: ${post.title}`}>
                 <p className="blog-card-kicker">{post.focus}</p>
                 <h3>{post.title}</h3>
                 <p className="blog-card-meta">
@@ -34,7 +38,7 @@ export default function BlogPage() {
                     <ArrowRight size={15} />
                   </span>
                 </div>
-              </a>
+              </Link>
             </article>
           ))}
         </div>

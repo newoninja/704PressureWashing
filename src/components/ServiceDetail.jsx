@@ -1,5 +1,6 @@
 import { CheckCircle2 } from 'lucide-react'
-import { business } from '../data/siteData'
+import { Link } from 'react-router-dom'
+import { business } from '../data/business'
 
 export default function ServiceDetail({ service }) {
   const Icon = service.icon
@@ -14,7 +15,7 @@ export default function ServiceDetail({ service }) {
             We use the right method for each surface and keep communication clear throughout the
             entire project.
           </p>
-          <a href="/quote" className="btn btn-primary">Request a Free Estimate</a>
+          <Link to="/quote" className="btn btn-primary">Request a Free Estimate</Link>
         </div>
 
         <div className="story-panel service-panel">
