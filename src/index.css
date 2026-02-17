@@ -315,6 +315,10 @@ p {
   padding-inline: 1.1rem;
 }
 
+.nav-estimate-short {
+  display: none;
+}
+
 .menu-toggle {
   display: none;
   width: 42px;
@@ -1682,6 +1686,10 @@ a:focus-visible {
 }
 
 @media (max-width: 760px) {
+  .top-strip {
+    display: none;
+  }
+
   .top-strip-hide-sm,
   .top-strip-hide-md {
     display: none;
@@ -1693,51 +1701,99 @@ a:focus-visible {
   }
 
   .main-nav {
-    min-height: 66px;
-    gap: 0.45rem;
+    min-height: 62px;
+    gap: 0.4rem;
   }
 
   .brand-lockup p {
-    font-size: 0.86rem;
+    font-size: 0.82rem;
     line-height: 1.05;
   }
 
   .brand-lockup span {
+    display: none;
     font-size: 0.56rem;
     letter-spacing: 0.05em;
   }
 
   .brand-lockup img {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nav-estimate-btn {
+    min-height: 44px;
+    padding: 0.38rem 0.78rem;
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.03em;
+    border-radius: 999px;
+  }
+
+  .nav-estimate-full {
+    display: none;
+  }
+
+  .nav-estimate-short {
+    display: inline;
+  }
+
+  .menu-toggle {
     width: 44px;
     height: 44px;
   }
 
-  .nav-estimate-btn {
-    min-height: 40px;
-    padding: 0.38rem 0.82rem;
-    font-size: 0.72rem;
-    line-height: 1;
-    letter-spacing: 0.02em;
-  }
-
-  .menu-toggle {
-    width: 40px;
-    height: 40px;
-  }
-
   .hero-content h1 {
-    font-size: clamp(2.25rem, 10vw, 3.1rem);
-    line-height: 1.02;
+    font-size: clamp(1.95rem, 11vw, 2.7rem);
+    line-height: 1.04;
+    margin-bottom: 0.7rem;
+  }
+
+  .eyebrow {
+    margin-bottom: 0.45rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.055em;
+  }
+
+  .hero-subhead {
+    font-size: 1rem;
+    line-height: 1.48;
+    margin: 0.75rem 0 1.05rem;
   }
 
   .hero-grid {
-    padding: 2rem 0 1.7rem;
-    gap: 1.2rem;
+    padding: 1.2rem 0 1.1rem;
+    gap: 0.95rem;
   }
 
   .hero-proof-stack {
-    gap: 0.75rem;
-    margin-top: 0.55rem;
+    gap: 0.65rem;
+    margin-top: 0.35rem;
+  }
+
+  .hero-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.52rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .hero-actions .btn {
+    min-height: 48px;
+    justify-content: center;
+  }
+
+  .hero-actions .btn-secondary {
+    border-width: 1px;
+    color: #dce7fb;
+    border-color: rgba(198, 214, 241, 0.55);
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .hero-how {
+    font-size: 0.89rem;
+    line-height: 1.44;
+    color: #c5d4ee;
   }
 
   .services-grid,
@@ -1833,22 +1889,32 @@ a:focus-visible {
   }
 
   .hero-google-badge {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr auto;
     max-width: 100%;
-    gap: 0.5rem;
-    padding: 0.68rem 0.77rem;
+    gap: 0.35rem 0.55rem;
+    padding: 0.62rem 0.7rem;
+    border-radius: 16px;
+  }
+
+  .hero-google-stars svg {
+    width: 16px;
+    height: 16px;
   }
 
   .hero-google-score,
   .hero-google-badge p {
-    font-size: 1.26rem;
+    font-size: 1.03rem;
+  }
+
+  .hero-google-badge p {
+    line-height: 1.2;
   }
 
   .hero-google-icon {
-    grid-column: 1;
-    grid-row: auto;
-    width: 56px;
-    height: 56px;
+    grid-column: 2 / 3;
+    grid-row: 1 / 3;
+    width: 42px;
+    height: 42px;
   }
 
   .section {
@@ -1870,17 +1936,28 @@ a:focus-visible {
 
   .hero-trust-row {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.55rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
   }
 
   .hero-trust-row strong {
-    font-size: 1.08rem;
+    font-size: 1rem;
   }
 
   .hero-trust-row span {
-    font-size: 0.72rem;
-    letter-spacing: 0.02em;
+    font-size: 0.7rem;
+    letter-spacing: 0.015em;
+  }
+
+  .hero-trust-item {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(170, 196, 236, 0.23);
+    border-radius: 12px;
+    padding: 0.42rem 0.5rem;
+  }
+
+  .hero-trust-item-years {
+    display: none;
   }
 
   .hero-card {
@@ -1905,21 +1982,9 @@ a:focus-visible {
 }
 
 @media (max-width: 480px) {
-  .top-strip-inner {
-    justify-content: flex-start;
-  }
-
-  .top-strip-item {
-    font-size: 0.74rem;
-  }
-
   .nav-estimate-btn {
-    font-size: 0.66rem;
-    padding: 0.34rem 0.62rem;
-  }
-
-  .hero-actions .btn {
-    width: 100%;
+    font-size: 0.64rem;
+    padding: 0.32rem 0.56rem;
   }
 
   .map-label {
@@ -1932,11 +1997,7 @@ a:focus-visible {
   }
 
   .hero-subhead {
-    font-size: 1.05rem;
-  }
-
-  .hero-trust-row {
-    grid-template-columns: 1fr 1fr;
+    font-size: 0.98rem;
   }
 
   .area-social-link span {

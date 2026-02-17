@@ -72,7 +72,10 @@ export default function Nav() {
           </nav>
 
           <div className="nav-actions">
-            <a href="/quote" className="btn btn-primary nav-estimate-btn">Get Free Estimate</a>
+            <a href="/quote" className="btn btn-primary nav-estimate-btn">
+              <span className="nav-estimate-full">Get Free Estimate</span>
+              <span className="nav-estimate-short">Estimate</span>
+            </a>
             <button
               type="button"
               aria-label="Toggle mobile menu"

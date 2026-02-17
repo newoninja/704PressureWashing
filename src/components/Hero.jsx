@@ -65,15 +65,15 @@ export default function Hero() {
             </div>
 
             <div className="hero-trust-row" aria-label="Trust highlights">
-              <div>
+              <div className="hero-trust-item">
                 <strong>{ratingText}</strong>
                 <span>Google Rating</span>
               </div>
-              <div>
+              <div className="hero-trust-item">
                 <strong>{reviewCountText}</strong>
                 <span>Happy Customers</span>
               </div>
-              <div>
+              <div className="hero-trust-item hero-trust-item-years">
                 <strong>{business.years}</strong>
                 <span>Years Experience</span>
               </div>
