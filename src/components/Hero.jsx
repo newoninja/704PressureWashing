@@ -39,7 +39,7 @@ export default function Hero() {
         playsInline
         preload="metadata"
       >
-        <source src="/hero-mobile-lite.mp4" type="video/mp4" />
+        <source src="/hero-mobile.mov" type="video/quicktime" />
         <source src="/hero-cleaning.mp4" type="video/mp4" />
       </video>
       <div className="hero-overlay" />
