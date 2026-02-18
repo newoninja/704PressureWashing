@@ -143,7 +143,12 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="hero-team-card">
+          <Link
+            to="/our-story"
+            className="hero-team-card hero-team-card-link"
+            aria-label="Read more about 704 Pressure Washing owner and company story"
+            onClick={() => trackEvent('cta_click', { source: 'hero_owner_story' })}
+          >
             {hasTeamPhoto ? (
               <img
                 src="/team-photo.jpg"
@@ -158,8 +163,9 @@ export default function Hero() {
             <div>
               <p>Owner-led, local service you can trust.</p>
               {!hasTeamPhoto && <small>Add `public/team-photo.jpg` to show your real team photo.</small>}
+              <small>Read our story</small>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </section>

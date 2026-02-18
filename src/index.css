@@ -695,6 +695,22 @@ p {
   backdrop-filter: blur(8px);
 }
 
+.hero-team-card-link {
+  text-decoration: none;
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease;
+}
+
+.hero-team-card-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sm);
+  border-color: rgba(216, 233, 255, 0.6);
+}
+
+.hero-team-card-link:focus-visible {
+  outline: 2px solid #f7ca56;
+  outline-offset: 2px;
+}
+
 .hero-team-card img,
 .hero-team-placeholder {
   width: 68px;
