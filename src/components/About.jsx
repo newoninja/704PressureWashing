@@ -45,6 +45,10 @@ export default function About() {
         </div>
 
         <div className="story-panel reveal reveal-left" style={{ animationDelay: '0.15s' }}>
+          <figure className="story-owner-photo">
+            <img src="/team-photo.jpg" alt="Andrew Matheny, owner of 704 Pressure Washing Services" />
+            <figcaption>Andrew Matheny • Owner, 704 Pressure Washing Services</figcaption>
+          </figure>
           <h3>Why customers keep calling us back</h3>
           <ul>
             {highlights.map((item) => (
