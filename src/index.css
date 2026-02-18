@@ -573,8 +573,8 @@ p {
 }
 
 .hero-trust-item {
-  background: rgba(183, 216, 255, 0.08);
-  border: 1px solid rgba(176, 216, 255, 0.23);
+  background: rgba(10, 24, 55, 0.72);
+  border: 1px solid rgba(176, 216, 255, 0.36);
   border-radius: 12px;
   padding: 0.5rem 0.62rem;
   backdrop-filter: blur(6px);
@@ -2439,8 +2439,8 @@ a:focus-visible {
   }
 
   .hero-trust-item {
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(170, 196, 236, 0.23);
+    background: rgba(7, 18, 42, 0.84);
+    border: 1px solid rgba(170, 196, 236, 0.44);
     border-radius: 12px;
     padding: 0.42rem 0.5rem;
   }
