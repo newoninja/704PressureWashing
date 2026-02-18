@@ -370,6 +370,25 @@ p {
   filter: saturate(1.05) contrast(1.06);
 }
 
+.hero-video-bg-desktop {
+  display: block;
+}
+
+.hero-video-bg-mobile {
+  display: none;
+}
+
+.hero-video-mobile-corner-mask {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 220px;
+  height: 220px;
+  display: none;
+  pointer-events: none;
+  background: radial-gradient(circle at 100% 100%, rgba(6, 16, 39, 0.96) 0%, rgba(6, 16, 39, 0.94) 44%, rgba(6, 16, 39, 0.56) 72%, rgba(6, 16, 39, 0) 100%);
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -2163,6 +2182,27 @@ a:focus-visible {
     font-size: clamp(1.95rem, 11vw, 2.7rem);
     line-height: 1.04;
     margin-bottom: 0.7rem;
+  }
+
+  .hero-video-bg-desktop {
+    display: none;
+  }
+
+  .hero-video-bg-mobile {
+    display: block;
+    opacity: 0.33;
+    filter: saturate(0.94) contrast(1.02);
+    object-position: center;
+  }
+
+  .hero-video-mobile-corner-mask {
+    display: block;
+    width: 165px;
+    height: 165px;
+  }
+
+  .hero-overlay {
+    opacity: 0.32;
   }
 
   .eyebrow {

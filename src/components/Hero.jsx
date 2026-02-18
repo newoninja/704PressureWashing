@@ -21,7 +21,7 @@ export default function Hero() {
   return (
     <section className="hero-section">
       <video
-        className="hero-video-bg"
+        className="hero-video-bg hero-video-bg-desktop"
         autoPlay
         loop
         muted
@@ -31,7 +31,19 @@ export default function Hero() {
         <source src="/hero-cleaning.mp4" type="video/mp4" />
         <source src="https://videos.pexels.com/video-files/5698710/5698710-hd_1920_1080_24fps.mp4" type="video/mp4" />
       </video>
+      <video
+        className="hero-video-bg hero-video-bg-mobile"
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="metadata"
+      >
+        <source src="/hero-mobile.mov" type="video/quicktime" />
+        <source src="/hero-cleaning.mp4" type="video/mp4" />
+      </video>
       <div className="hero-overlay" />
+      <div className="hero-video-mobile-corner-mask" aria-hidden="true" />
       <div className="container hero-grid">
         <div className="hero-content">
           <p className="eyebrow">Licensed and Insured Exterior Cleaning</p>
