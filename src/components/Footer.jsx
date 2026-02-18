@@ -1,4 +1,4 @@
-import { ArrowRight, Facebook, Instagram, MapPin, Phone } from 'lucide-react'
+import { ArrowRight, Facebook, Instagram, Phone } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { business } from '../data/business'
 import { trackCallClick, trackEvent } from '../utils/analytics'
@@ -65,10 +65,6 @@ export default function Footer() {
                 {business.phoneDisplay}
               </a>
             </li>
-            <li className="footer-icon-link">
-              <MapPin size={14} />
-              {business.address}
-            </li>
             <li>
               <a className="footer-social-link footer-social-facebook" href="https://www.facebook.com/people/704Pressurewashingservices/61558510378051/" target="_blank" rel="noopener noreferrer">
                 <Facebook size={14} />
@@ -87,7 +83,10 @@ export default function Footer() {
 
       <div className="footer-bottom">
         <div className="container footer-bottom-inner">
-          <p className="footer-copyright">© {currentYear} 704 Pressure Washing Services · All rights reserved.</p>
+          <div>
+            <p className="footer-copyright">© {currentYear} 704 Pressure Washing Services · All rights reserved.</p>
+            <p className="footer-seo-address">{business.address}</p>
+          </div>
           <div className="footer-bottom-links">
             <Link to="/privacy-policy">Privacy Policy</Link>
             <Link to="/terms">Terms</Link>

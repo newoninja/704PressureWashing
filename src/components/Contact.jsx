@@ -60,7 +60,7 @@ export default function Contact() {
             </a>
             <div>
               <MapPin size={16} />
-              <span>{business.address}</span>
+              <span>Serving Charlotte metro and nearby communities</span>
             </div>
             <div>
               <Clock size={16} />

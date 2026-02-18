@@ -1806,6 +1806,13 @@ a:focus-visible {
   color: #c8d4e8;
 }
 
+.footer-seo-address {
+  margin: 0.18rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: rgba(200, 212, 232, 0.62);
+}
+
 .page-header {
   background: linear-gradient(100deg, rgba(12, 23, 48, 0.95), rgba(22, 38, 70, 0.92));
   padding: 3.2rem 0;
@@ -2244,6 +2251,10 @@ a:focus-visible {
 
   .footer-copyright {
     font-size: 0.8rem;
+  }
+
+  .footer-seo-address {
+    font-size: 0.68rem;
   }
 }
 

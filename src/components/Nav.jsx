@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Clock, Menu, Phone, MapPin, X } from 'lucide-react'
+import { Clock, Menu, Phone, X } from 'lucide-react'
 import { Link, NavLink } from 'react-router-dom'
 import { business } from '../data/business'
 import { trackCallClick } from '../utils/analytics'
@@ -31,10 +31,6 @@ export default function Nav() {
             <a href={`tel:${business.phoneHref}`} onClick={() => trackCallClick('top_strip')}>
               {business.phoneDisplay}
             </a>
-          </div>
-          <div className="top-strip-item top-strip-hide-sm">
-            <MapPin size={14} />
-            <span>{business.address}</span>
           </div>
           <div className="top-strip-item top-strip-hide-md">
             <Clock size={14} />
