@@ -1,7 +1,7 @@
 const cache = new Map()
 const galleryFallbackPairs = [
   { before: '/images/jobs/IMG_0051.jpg', after: '/images/jobs/IMG_0059.jpg' },
-  { before: '/images/jobs/IMG_2551.jpg', after: '/images/jobs/IMG_2553.jpg' },
+  { before: '/images/jobs/IMG_2552.jpg', after: '/images/jobs/IMG_2553.jpg' },
   { before: '/images/jobs/IMG_0909.jpg', after: '/images/jobs/IMG_0928.jpg' },
 ]
 
